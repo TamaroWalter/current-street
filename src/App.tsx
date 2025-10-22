@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route, Link} from 'react-router-dom';
-import { Grid, GridItem, Flex, Box, Text,  Container, HStack, Link as ChakraLink, Image, Icon, Stack} from '@chakra-ui/react';
+import { Grid, GridItem, Flex, Box, Text,  Container, HStack, Link as ChakraLink, Icon, Stack} from '@chakra-ui/react';
 import { SiSpotify, SiInstagram, SiYoutube, SiApple, SiGmail } from 'react-icons/si'
 import './App.css';
 import Home from './components/Home';
