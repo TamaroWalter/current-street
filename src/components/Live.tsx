@@ -64,7 +64,3 @@ export default function Live() {
     </Stack>
   )
 }
-
-
-
-// Objects.
