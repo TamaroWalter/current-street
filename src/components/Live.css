@@ -1,4 +1,22 @@
-.live-content {
+.live-dates {
     display: flex;
-    align-items: left;
+    justify-content: center;
+    align-items: center;
+}
+
+.live-gig {
+    outline: 2px solid #1C1C1E;
+    border-radius: 0.75rem;
+    overflow: hidden;
+}
+
+.live-gig-info {
+    height: 100%;
+    padding: 0.75rem;
+}
+
+.live-gig-maps:hover {
+    transform: scale(1.05);
+    transition: transform 0.2s;
+    background-color: #ca6164;
 }
