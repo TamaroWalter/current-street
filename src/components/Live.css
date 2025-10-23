@@ -10,6 +10,11 @@
     overflow: hidden;
 }
 
+.live-gig-info {
+    height: 100%;
+    padding: 0.75rem;
+}
+
 .live-gig-maps:hover {
     transform: scale(1.05);
     transition: transform 0.2s;
