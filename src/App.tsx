@@ -42,7 +42,6 @@ function App() {
         <Container as="footer" className="footer" >
           <Stack gap="6">
             <Stack direction="row" justify="space-between" align="center">
-              {/*<Logo height="32" />*/}
               <HStack gap="4">
                 {socialLinks.map(({ i, href, icon }) => (
                   <ChakraLink className="footer-social" key={i} href={href} colorPalette="gray">
