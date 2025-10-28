@@ -1,0 +1,14 @@
+[
+  {
+    "route": "/",
+    "text": "header_home"
+  },
+  {
+    "route": "/about",
+    "text": "header_about"
+  },
+  {
+    "route": "/live",
+    "text": "header_live"
+  }
+]
