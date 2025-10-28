@@ -73,11 +73,13 @@
   padding: 0.5rem;
   background-color: #f4f4f5;
   border-radius: 0.75rem;
+  border-color: #1C1C1E;
   margin: auto;
 }
 
 .navigation-item {
-  color: #1c1c1c;
+  color: #1c1c1e;
+  font-weight: bold;
 }
 
 .footer {
@@ -91,6 +93,14 @@
 
 .footer-social:hover {
   color: #ca6164;
+}
+
+.footer-togglelang {
+  font-weight: bold;
+  border-color: #1c1c1e;
+  border-radius: 0.5rem;
+  padding: 0.75rem;
+  background-color: #a1aaaa;
 }
 
 .footer_copyright {

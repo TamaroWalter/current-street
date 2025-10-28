@@ -1,13 +1,28 @@
+// Imports from react and UI library.
+import { useContext } from 'react';
 import { BrowserRouter, Routes, Route, Link, useLocation} from 'react-router-dom';
 import { Button, Flex, Box, Text,  Container, HStack, Link as ChakraLink, Icon, Stack} from '@chakra-ui/react';
-import { SiSpotify, SiInstagram, SiYoutube, SiApple, SiGmail } from 'react-icons/si'
+
+// Import core.
+import { getIcon, getString } from './core/lib';
+import { useLanguage } from './core/LanguageContext';
+// Import components styling.
 import './App.css';
+
+// Import other components.
 import Home from './components/Home';
 import About from './components/About';
 import Live from './components/Live';
-import navigation from './data/navigation.json';
 
-function App() {
+// Import data.
+import navigation from './data/navigation.json';
+import social from './data/social.json';
+
+/**
+ * Builds the content of the website.
+ * @returns 
+ */
+export default function App() {
   return (
     <BrowserRouter>
       <Box className="app-container">
@@ -37,10 +52,10 @@ function AppHeader() {
         </Text>
       </Box>
       <Container className="header-child">
-        <Flex gap="4" className="header-navigation">
+        <Flex gap="2" className="header-navigation">
           {navigation.map(({route, text}) => (
             <Button backgroundColor={(route == location.pathname) ? '#a1aaaa' : '#f4f4f5'}>
-              <Link className="navigation-item" to={route} >{text}</Link>
+              <Link className="navigation-item" to={route} >{getString(text)}</Link>
             </Button>
             ))}
         </Flex>
@@ -50,36 +65,28 @@ function AppHeader() {
 }
 
 function AppFooter() {
+  const { language, setLanguage } = useLanguage();
   return (
     <Container as="footer" className="footer" >
       <Stack gap="6">
         <Stack direction="row" justify="space-between" align="center">
           <HStack gap="4">
-            {socialLinks.map(({ i, href, icon }) => (
-              <ChakraLink className="footer-social" key={i} href={href} colorPalette="gray">
-                <Icon size="lg">{icon}</Icon>
+            {social.map(({ i, href, icon }) => (
+              <ChakraLink className="footer-social" key={i} href={href} colorPalette="gray" target="_blank" rel="noopener noreferrer">
+                <Icon size="lg">{getIcon(icon)}</Icon>
               </ChakraLink>
             ))}
           </HStack>
+          <Button variant="plain" className="footer-togglelang" onClick={() => setLanguage(language === 'en' ? 'de' : 'en')}>
+            {getString("lang_toggle")}
+          </Button>
         </Stack>
         <Flex align="center" justify="center" width="100%">
           <Text className="footer_copyright">
-            © {new Date().getFullYear()} Current Street. All rights reserved.
+            © {new Date().getFullYear()} {getString("copyright")}
           </Text>
         </Flex>
       </Stack>
     </Container>
   );
 }
-
-// Objects.
-
-const socialLinks = [
-  { i: 0, href: 'https://open.spotify.com/artist/4S3tOMrY2Xj9zhnmema3M3?si=6KI7qqPiTdiWFdrKN2yktg', icon: <SiSpotify /> },
-  { i: 2, href: 'https://www.instagram.com/current_street/', icon: <SiInstagram /> },
-  { i: 3, href: 'mailto:currentstreet21@gmail.com', icon: <SiGmail /> },
-  { i: 4, href: 'https://www.youtube.com/@currentstreet', icon: <SiYoutube /> },
-  { i: 5, href: 'https://music.apple.com/de/artist/current-street/1726848028', icon: <SiApple />  },
-]
-
-export default App

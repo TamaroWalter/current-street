@@ -1,5 +1,5 @@
 import {Container, Button, Text, Flex, Stack, VStack, Box} from "@chakra-ui/react";
-import { SiGooglemaps } from "react-icons/si";
+import { getIcon, getString} from "../core/lib";
 import gigs from "../data/gigs.json";
 import './Live.css';
 
@@ -37,7 +37,7 @@ const Gig = ({id, name, time, city, adress, location}: Gig) => {
         <Flex padding="0.75rem" width={{base: "100%", md: "30%"}} align="center" justify="center">
           <Button className="live-gig-maps" rounded="md" size="md" asChild>
             <a href={`https://www.google.com/maps?q=${location}`} target="_blank" rel="noopener noreferrer">
-              Navigate <SiGooglemaps />
+              {getString("directions")} {getIcon('googlemaps')}
             </a>
           </Button>
         </Flex>
@@ -50,7 +50,7 @@ export default function Live() {
   return (
     <Stack>
       <Flex align="left">
-        <Text fontSize="3xl" fontWeight="bold">UPCOMING GIGS:</Text>
+        <Text fontSize="3xl" fontWeight="bold">{getString("upcoming_gigs")}</Text>
       </Flex>
       <Container maxWidth="50rem">
         <Stack className="live-dates" gap="1rem">

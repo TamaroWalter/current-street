@@ -1,14 +1,14 @@
 [
   {
     "route": "/",
-    "text": "HOME"
+    "text": "header_home"
   },
   {
     "route": "/about",
-    "text": "ABOUT"
+    "text": "header_about"
   },
   {
     "route": "/live",
-    "text": "LIVE"
+    "text": "header_live"
   }
 ]
