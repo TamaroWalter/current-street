@@ -104,6 +104,11 @@
   background-color: #a1aaaa;
 }
 
+.footer-togglelang:hover {
+  background-color: #ca6164;
+
+}
+
 .footer_copyright {
   display: flex;
   justify-content: center;
