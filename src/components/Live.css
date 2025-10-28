@@ -16,7 +16,8 @@
   padding: 0.75rem;
 }
 .live-gig-maps {
-  border-color: #ca6164;
+  color: #1C1C1E;
+  background-color: #a1aaaa;
 }
 
 .live-gig-maps:hover {

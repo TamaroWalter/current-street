@@ -1,0 +1,7 @@
+[
+  { "i": 0, "href": "https://open.spotify.com/artist/4S3tOMrY2Xj9zhnmema3M3?si=6KI7qqPiTdiWFdrKN2yktg", "icon": "<SiSpotify />" },
+  { "i": 2, "href": "https://www.instagram.com/current_street/", "icon": "<SiInstagram />" },
+  { "i": 3, "href": "mailto:currentstreet21@gmail.com", "icon": "<SiGmail />" },
+  { "i": 4, "href": "https://www.youtube.com/@currentstreet", "icon": "<SiYoutube />" },
+  { "i": 5, "href": "https://music.apple.com/de/artist/current-street/1726848028", "icon": "<SiApple />" }
+]

@@ -35,7 +35,7 @@ const Gig = ({id, name, time, city, adress, location}: Gig) => {
           </VStack>
         </Box>
         <Flex padding="0.75rem" width={{base: "100%", md: "30%"}} align="center" justify="center">
-          <Button className="live-gig-maps" variant="surface" rounded="md" size="md" asChild>
+          <Button className="live-gig-maps" rounded="md" size="md" asChild>
             <a href={`https://www.google.com/maps?q=${location}`} target="_blank" rel="noopener noreferrer">
               Navigate <SiGooglemaps />
             </a>

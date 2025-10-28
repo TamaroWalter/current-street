@@ -1,11 +1,11 @@
 [
-    {
-        "id": 0,
-        "name": "Rock im Rosenkiez",
-        "date": "07.11.25",
-        "time": 1762538400,
-        "city": "Osnabrück",
-        "adress": "Klöntrupstraße 6, 49082",
-        "location": "52.266123, 8.057715"
-    }
+  {
+    "id": 0,
+    "name": "Rock im Rosenkiez",
+    "date": "07.11.25",
+    "time": 1762538400,
+    "city": "Osnabrück",
+    "adress": "Klöntrupstraße 6, 49082",
+    "location": "52.266123, 8.057715"
+  }
 ]

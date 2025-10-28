@@ -1,0 +1,14 @@
+[
+  {
+    "route": "/",
+    "text": "HOME"
+  },
+  {
+    "route": "/about",
+    "text": "ABOUT"
+  },
+  {
+    "route": "/live",
+    "text": "LIVE"
+  }
+]
