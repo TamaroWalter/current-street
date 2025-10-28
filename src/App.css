@@ -42,7 +42,7 @@
   height: 100%;
   padding: 1rem;
   background-image: url(/logo.svg);
-  background-size: 20%;
+  background-size: 60%;
   background-position: center;
   background-repeat: no-repeat;
 }
@@ -88,13 +88,6 @@
   padding-right: 1rem;
   margin-top: auto;
 }
-@media (min-width: 768px) {
-
-  .footer {
-    padding-top: 3rem;
-      padding-bottom: 2rem;
-  }
-}
 
 .footer-social:hover {
   color: #ca6164;
@@ -103,4 +96,17 @@
 .footer_copyright {
   display: flex;
   justify-content: center;
+}
+
+/* Styling for bigger screens*/
+@media (min-width: 768px) {
+
+  .footer {
+    padding-top: 3rem;
+      padding-bottom: 2rem;
+  }
+
+  .main-content {
+    background-size: 20%;
+  }
 }
