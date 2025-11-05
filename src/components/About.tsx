@@ -1,6 +1,8 @@
-import { Button, Container, Image, IconButton } from "@chakra-ui/react"
+import { Button, Container, Image, IconButton, Box } from "@chakra-ui/react";
 import { FaCircleArrowRight } from "react-icons/fa6";
-import bandfoto_1 from '../data/pix/bandfoto_1.jpg';
+import { useState } from "react";
+import photos from "../data/photos.json";
+import './About.css';
 
 interface Photo {
   id: number;
@@ -8,12 +10,46 @@ interface Photo {
   alt: string;
 }
 
-export default function About() {
+
+const SingleImage = ({id, source, alt}: Photo) => {
   return (
-    <Image height="30rem" fit="contain" rounded="md" src={bandfoto_1} alt="We are Current Street">
-      <IconButton>
-        <FaCircleArrowRight />
-      </IconButton>
-    </Image >
+    <Image key={id} height="100%"  width="100%"fit="contain" rounded="md" src={source} alt={alt}/>
   );
+}
+
+const SlideShow = () => {
+  const [imageId, setImageId] = useState(0);
+  const currentPhoto = photos[imageId];
+
+  const prev = () => {
+    setImageId((prevId) => (photos.length ? (prevId - 1 + photos.length) % photos.length : 0));
+  };
+
+  const next = () => {
+    setImageId((prevId) => (photos.length ? (prevId + 1) % photos.length : 0));
+  };
+
+  return (
+    <Container className="image-container">
+
+      <Box className="image-buttons">
+        <Button className="button-left" onClick={prev}>
+      
+        </Button>
+        <Button className="button-right" onClick={next}>
+
+        </Button>
+      </Box>
+      <Box className="image-box">
+        {currentPhoto ? (
+          <SingleImage id={currentPhoto.id} source={currentPhoto.source} alt={currentPhoto.alt} />
+        ) : null}
+      </Box>
+    </Container>
+  );
+
+}
+
+export default function About() {
+ return <SlideShow />;
 }
