@@ -1,6 +1,13 @@
-.image-container {
+.about-description {
+  background-color: #a1aaaa;
+}
+
+.image-slideshow {
   background: blue;
+  width: 50rem; 
   height: 40rem;
+  padding-top: 10rem;
+  padding-bottom: 10rem;
   position: relative;
 }
 
@@ -34,8 +41,8 @@
 
 }
 
-.image-container:hover .button-left,
-.image-container:hover .button-right {
+.image-slideshow:hover .button-left,
+.image-slideshow:hover .button-right {
   opacity: 1;
   pointer-events: auto;
 }

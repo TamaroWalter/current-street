@@ -1,5 +1,4 @@
 // Imports from react and UI library.
-import { useContext } from 'react';
 import { BrowserRouter, Routes, Route, Link, useLocation} from 'react-router-dom';
 import { Button, Flex, Box, Text,  Container, HStack, Link as ChakraLink, Icon, Stack} from '@chakra-ui/react';
 

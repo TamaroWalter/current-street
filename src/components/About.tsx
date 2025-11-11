@@ -1,6 +1,7 @@
-import { Button, Container, Image, IconButton, Box } from "@chakra-ui/react";
-import { FaCircleArrowRight } from "react-icons/fa6";
 import { useState } from "react";
+import { Button, Container, Image, Box, Text } from "@chakra-ui/react";
+
+import { getIcon, getString} from '../core/lib';
 import photos from "../data/photos.json";
 import './About.css';
 
@@ -13,7 +14,7 @@ interface Photo {
 
 const SingleImage = ({id, source, alt}: Photo) => {
   return (
-    <Image key={id} height="100%"  width="100%"fit="contain" rounded="md" src={source} alt={alt}/>
+    <Image key={id} height="100%" width="100%" fit="contain" rounded="md" src={source} alt={alt}/>
   );
 }
 
@@ -30,14 +31,14 @@ const SlideShow = () => {
   };
 
   return (
-    <Container className="image-container">
+    <Box className="image-slideshow">
 
       <Box className="image-buttons">
         <Button className="button-left" onClick={prev}>
-      
+          {getIcon('arrow_left')}
         </Button>
         <Button className="button-right" onClick={next}>
-
+          {getIcon('arrow_right')}
         </Button>
       </Box>
       <Box className="image-box">
@@ -45,11 +46,18 @@ const SlideShow = () => {
           <SingleImage id={currentPhoto.id} source={currentPhoto.source} alt={currentPhoto.alt} />
         ) : null}
       </Box>
-    </Container>
+    </Box>
   );
 
 }
 
 export default function About() {
- return <SlideShow />;
+  return (
+    <Container>
+      <Text className="about-description" rounded="md">
+        {getString("currentstreet_description")}
+      </Text>
+      <SlideShow />
+    </Container>
+  );
 }

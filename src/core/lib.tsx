@@ -1,4 +1,5 @@
 import { SiSpotify, SiInstagram, SiYoutube, SiApple, SiGmail, SiGooglemaps } from 'react-icons/si'
+import { IoIosArrowDropright, IoIosArrowDropleft } from "react-icons/io";
 import { useLanguage } from './LanguageContext';
 import en from '../data/lang/en.json';
 import de from '../data/lang/de.json';
@@ -10,7 +11,9 @@ export function getIcon(iconName: string): JSX.Element | null {
     case 'gmail': return <SiGmail />;
     case 'youtube': return <SiYoutube />;
     case 'apple': return <SiApple />;
-    case 'googlemaps': return <SiGooglemaps />
+    case 'googlemaps': return <SiGooglemaps />;
+    case 'arrow_left': return <IoIosArrowDropleft />;
+    case 'arrow_right': return <IoIosArrowDropright />;
     default: return null;
   }
 };
