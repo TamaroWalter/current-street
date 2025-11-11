@@ -1,63 +1,65 @@
+import { Flex, Button, Container, Image, IconButton, Box } from "@chakra-ui/react";
+import { FaCircleArrowRight } from "react-icons/fa6";
 import { useState } from "react";
-import { Button, Container, Image, Box, Text } from "@chakra-ui/react";
-
-import { getIcon, getString} from '../core/lib';
 import photos from "../data/photos.json";
-import './About.css';
-
-interface Photo {
-  id: number;
-  source: string;
-  alt: string;
-}
-
-
-const SingleImage = ({id, source, alt}: Photo) => {
-  return (
-    <Image key={id} height="100%" width="100%" fit="contain" rounded="md" src={source} alt={alt}/>
-  );
-}
-
-const SlideShow = () => {
-  const [imageId, setImageId] = useState(0);
-  const currentPhoto = photos[imageId];
-
-  const prev = () => {
-    setImageId((prevId) => (photos.length ? (prevId - 1 + photos.length) % photos.length : 0));
-  };
-
-  const next = () => {
-    setImageId((prevId) => (photos.length ? (prevId + 1) % photos.length : 0));
-  };
-
-  return (
-    <Box className="image-slideshow">
-
-      <Box className="image-buttons">
-        <Button className="button-left" onClick={prev}>
-          {getIcon('arrow_left')}
-        </Button>
-        <Button className="button-right" onClick={next}>
-          {getIcon('arrow_right')}
-        </Button>
-      </Box>
-      <Box className="image-box">
-        {currentPhoto ? (
-          <SingleImage id={currentPhoto.id} source={currentPhoto.source} alt={currentPhoto.alt} />
-        ) : null}
-      </Box>
-    </Box>
-  );
-
-}
+//import './About.css';
 
 export default function About() {
+  const [index, setIndex] = useState(0);
+
+  const prevImage = () =>
+    setIndex((prev) => (prev === 0 ? photos.length - 1 : prev - 1));
+  const nextImage = () =>
+    setIndex((prev) => (prev === photos.length - 1 ? 0 : prev + 1));
+
   return (
-    <Container>
-      <Text className="about-description" rounded="md">
-        {getString("currentstreet_description")}
-      </Text>
-      <SlideShow />
-    </Container>
+    <Box maxW="6xl" mx="auto" px={4} py={8}>
+      {/* Slideshow-Container */}
+      <Box
+        position="relative"
+        overflow="hidden"
+        borderRadius="xl"
+        height="40rem"
+      >
+        {/* Bild */}
+        <Image
+          src={photos[index].source}
+          alt={`Slide ${index + 1}`}
+          objectFit="cover"
+          w="100%"
+          h="100%"
+        />
+
+        {/* Buttons – immer sichtbar */}
+        <Flex
+          position="absolute"
+          top={0}
+          left={0}
+          w="100%"
+          h="100%"
+          justify="space-between"
+          align="center"
+          px={4}
+          pointerEvents="none" // wichtig, damit nur die Buttons klicken, nicht das unsichtbare Flex
+        >
+          <IconButton
+            aria-label="Previous"
+            onClick={prevImage}
+            pointerEvents="auto"
+            bg="whiteAlpha.700"
+            _hover={{ bg: "whiteAlpha.900" }}
+            borderRadius="full"
+          />
+          <IconButton
+            aria-label="Next"
+            onClick={nextImage}
+            pointerEvents="auto"
+            bg="whiteAlpha.700"
+            _hover={{ bg: "whiteAlpha.900" }}
+            borderRadius="full"
+          />
+        </Flex>
+      </Box>
+    </Box>
   );
 }
