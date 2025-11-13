@@ -1,55 +1,97 @@
-import { Button, Container, Image, IconButton, Box } from "@chakra-ui/react";
-import { FaCircleArrowRight } from "react-icons/fa6";
-import { useState } from "react";
+import type { IconButtonProps } from "@chakra-ui/react"
+import { AspectRatio, Box, Carousel, Container, IconButton, Image } from "@chakra-ui/react"
+import { forwardRef } from "react"
+import { LuArrowLeft, LuArrowRight } from "react-icons/lu"
 import photos from "../data/photos.json";
 import './About.css';
 
-interface Photo {
-  id: number;
-  source: string;
-  alt: string;
-}
 
-
-const SingleImage = ({id, source, alt}: Photo) => {
+export default function About() {
   return (
-    <Image key={id} height="100%"  width="100%"fit="contain" rounded="md" src={source} alt={alt}/>
+    <Container minHeight="40rem" h="100%" w="100%">
+      <SlideShow />
+    </Container>
   );
 }
 
 const SlideShow = () => {
-  const [imageId, setImageId] = useState(0);
-  const currentPhoto = photos[imageId];
-
-  const prev = () => {
-    setImageId((prevId) => (photos.length ? (prevId - 1 + photos.length) % photos.length : 0));
-  };
-
-  const next = () => {
-    setImageId((prevId) => (photos.length ? (prevId + 1) % photos.length : 0));
-  };
-
   return (
-    <Container className="image-container">
+     <Carousel.Root
+        slideCount={photos.length}
+        maxW="2xl"
+        mx="auto"
+        gap="4"
+        position="relative"
+        colorPalette="white"
+    >
+        <Carousel.Control gap="4" width="full" position="relative">
+        <Carousel.PrevTrigger asChild>
+            <ActionButton insetStart="4">
+            <LuArrowLeft />
+            </ActionButton>
+        </Carousel.PrevTrigger>
 
-      <Box className="image-buttons">
-        <Button className="button-left" onClick={prev}>
-      
-        </Button>
-        <Button className="button-right" onClick={next}>
+        <Carousel.ItemGroup width="full">
+            {photos.map((photo) => (
+             <PhotoImage key={photo.id} id={photo.id} source={photo.source} alt={photo.alt}/>
+            ))}
+        </Carousel.ItemGroup>
 
-        </Button>
-      </Box>
-      <Box className="image-box">
-        {currentPhoto ? (
-          <SingleImage id={currentPhoto.id} source={currentPhoto.source} alt={currentPhoto.alt} />
-        ) : null}
-      </Box>
-    </Container>
+        <Carousel.NextTrigger asChild>
+            <ActionButton insetEnd="4">
+            <LuArrowRight />
+            </ActionButton>
+        </Carousel.NextTrigger>
+
+        <Box position="absolute" bottom="6" width="full">
+            <Carousel.Indicators
+            transition="width 0.2s ease-in-out"
+            transformOrigin="center"
+            opacity="0.5"
+            boxSize="2"
+            _current={{ width: "10", bg: "colorPalette.subtle", opacity: 1 }}
+            />
+        </Box>
+        </Carousel.Control>
+    </Carousel.Root>
   );
 
 }
 
-export default function About() {
- return <SlideShow />;
+
+
+// Single Components.
+const PhotoImage = ({id, source, alt}: Photo) => {
+  return (
+    <Carousel.Item key={id} index={id}>
+        <AspectRatio ratio={16 / 9} maxH="72vh" w="full">
+        <Image src={source} alt={alt} objectFit="contain"
+        />
+        </AspectRatio>
+    </Carousel.Item>
+  );
+}
+
+const ActionButton = forwardRef<HTMLButtonElement, IconButtonProps>(
+  function ActionButton(props, ref) {
+    return (
+      <IconButton
+        {...props}
+        ref={ref}
+        size="xs"
+        variant="outline"
+        rounded="full"
+        position="absolute"
+        zIndex="1"
+        bg="bg"
+      />
+    )
+  },
+)
+
+// Interfaces and Data objects.
+interface Photo {
+  id: number;
+  source: string;
+  alt: string;
 }
