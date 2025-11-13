@@ -54,7 +54,7 @@ function AppHeader() {
       <Container className="header-child">
         <Flex gap="2" className="header-navigation">
           {navigation.map(({route, text}) => (
-            <Button backgroundColor={(route == location.pathname) ? '#a1aaaa' : '#f4f4f5'}>
+            <Button backgroundColor={(route == location.pathname) ? '#a1aaaa' : '#f4f4f5'} asChild>
               <Link className="navigation-item" to={route} >{getString(text)}</Link>
             </Button>
             ))}
