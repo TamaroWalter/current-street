@@ -52,7 +52,7 @@ function AppHeader() {
         </Text>
       </Box>
       <Container className="header-child">
-        <Flex gap="2" className="header-navigation">
+        <Flex gap="2" className="background-box">
           {navigation.map(({route, text}) => (
             <Button backgroundColor={(route == location.pathname) ? '#a1aaaa' : '#f4f4f5'} asChild>
               <Link className="navigation-item" to={route} >{getString(text)}</Link>

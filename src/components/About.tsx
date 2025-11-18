@@ -1,15 +1,16 @@
 import type { IconButtonProps } from "@chakra-ui/react"
-import { AspectRatio, Box, Carousel, Container, IconButton, Image } from "@chakra-ui/react"
+import { AspectRatio, Box, Carousel, Container, IconButton, Image, Blockquote } from "@chakra-ui/react"
 import { forwardRef } from "react"
-import { LuArrowLeft, LuArrowRight } from "react-icons/lu"
+import { getIcon, getString } from '../core/lib';
 import photos from "../data/photos.json";
 import './About.css';
 
 
 export default function About() {
   return (
-    <Container minHeight="30rem" h="100%" w="100%">
+    <Container className="about-root">
       <SlideShow />
+      <BandDescription/>
     </Container>
   );
 }
@@ -27,7 +28,7 @@ const SlideShow = () => {
         <Carousel.Control gap="4" width="full" position="relative">
         <Carousel.PrevTrigger asChild>
             <ActionButton insetStart="4">
-            <LuArrowLeft />
+              {getIcon('arrowleft')}
             </ActionButton>
         </Carousel.PrevTrigger>
 
@@ -39,7 +40,7 @@ const SlideShow = () => {
 
         <Carousel.NextTrigger asChild>
             <ActionButton insetEnd="4">
-            <LuArrowRight />
+              {getIcon('arrowright')}
             </ActionButton>
         </Carousel.NextTrigger>
 
@@ -58,7 +59,15 @@ const SlideShow = () => {
 
 }
 
-
+const BandDescription = () => {
+  return (
+    <Blockquote.Root className="background-box band-description" justify="center">
+      <Blockquote.Content>
+        {getString("currentstreet_description")}
+      </Blockquote.Content>
+    </Blockquote.Root>
+  );
+}
 
 // Single Components.
 const PhotoImage = ({id, source, alt}: Photo) => {

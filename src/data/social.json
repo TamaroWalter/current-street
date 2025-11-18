@@ -23,5 +23,10 @@
     "i": 5, 
     "href": "https://music.apple.com/de/artist/current-street/1726848028", 
     "icon": "apple" 
+  },
+  {
+    "i": 6,
+    "href": "https://github.com/TamaroWalter/current-street",
+    "icon": "github"
   }
 ]
