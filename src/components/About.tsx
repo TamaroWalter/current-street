@@ -8,7 +8,7 @@ import './About.css';
 
 export default function About() {
   return (
-    <Container minHeight="40rem" h="100%" w="100%">
+    <Container minHeight="30rem" h="100%" w="100%">
       <SlideShow />
     </Container>
   );
@@ -18,7 +18,7 @@ const SlideShow = () => {
   return (
      <Carousel.Root
         slideCount={photos.length}
-        maxW="2xl"
+        maxW={{base: "2xl", md: "3xl"}}
         mx="auto"
         gap="4"
         position="relative"
