@@ -70,15 +70,22 @@ const BandDescription = () => {
 }
 
 // Single Components.
-const PhotoImage = ({id, source, alt}: Photo) => {
+const PhotoImage = ({ id, source, alt }: Photo) => {
   return (
     <Carousel.Item key={id} index={id}>
-        <AspectRatio ratio={16 / 9} maxH="72vh" w="full">
-        <Image src={source} alt={alt} objectFit="contain"
-        />
-        </AspectRatio>
+      <AspectRatio ratio={16 / 9} maxH="72vh" w="full">
+        <Box display="flex" alignItems="center" justifyContent="center">
+          <Image
+            src={source}
+            alt={alt}
+            objectFit="contain"
+            maxH="100%"
+            maxW="100%"
+          />
+        </Box>
+      </AspectRatio>
     </Carousel.Item>
-  );
+  )
 }
 
 const ActionButton = forwardRef<HTMLButtonElement, IconButtonProps>(
