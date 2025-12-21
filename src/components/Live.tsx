@@ -1,4 +1,4 @@
-import {Container, Button, Text, Flex, Stack, VStack, Box} from "@chakra-ui/react";
+import {Container, Button, Text, Flex, HStack,Stack, VStack, Box, Link as ChakraLink, Icon} from "@chakra-ui/react";
 import { getIcon, getString} from "../core/lib";
 import gigs from "../data/gigs.json";
 import './Live.css';
@@ -70,16 +70,30 @@ export default function Live() {
   const upcomingGigs = gigs.filter(gig => gig.time >= now);
   const pastGigs = gigs.filter(gig => gig.time < now);
   return (
-    <Stack >
+    <Stack>
       <Box marginBottom="5rem">
         <Flex align="left">
           <Text fontSize="3xl" fontWeight="bold">{getString("upcoming_gigs")}</Text>
         </Flex>
         <Container maxWidth="50rem">
           <Stack className="live-dates" gap="1rem">
-            {upcomingGigs.map((gig) => (
-              <GigCard key={gig.id} id={gig.id} name={gig.name} time={gig.time} city={gig.city} adress={gig.adress} location={gig.location} />
-            ))}
+            {upcomingGigs.length > 0 ? (
+              upcomingGigs.map((gig) => (
+                <GigCard key={gig.id} id={gig.id} name={gig.name} time={gig.time} city={gig.city} adress={gig.adress} location={gig.location} />
+              ))
+            ) : (
+              <Stack>
+                <Text fontSize="xl" fontWeight="bold"> {getString("no_upcoming_gigs")}</Text>
+                <iframe
+                  className="spotify-embed"
+                  src="https://open.spotify.com/embed/artist/4S3tOMrY2Xj9zhnmema3M3?utm_source=generator"
+                  allowFullScreen
+                  allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+                  loading="lazy">
+                </iframe>
+              </Stack>
+            )
+            }
           </Stack>
         </Container>
       </Box>
