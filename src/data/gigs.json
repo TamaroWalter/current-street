@@ -1,5 +1,13 @@
 [
   {
+    "id": 9,
+    "name": "Baracke Münster",
+    "time": 1778896800,
+    "city": "Münster",
+    "adress": "Scharnhorststraße 106, 48151",
+    "location": "51,9508899, 7,6075944"
+  },
+  {
     "id": 8,
     "name": "Rock im Rosenkiez",
     "time": 1762538400,
