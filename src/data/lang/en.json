@@ -1,4 +1,5 @@
 {
+  "calendar": "Calendar",
   "copyright": "Current Street. All rights reserved.",
   "currentstreet_description": "Current Street - fünf Musiker, die ihre unterschiedlichen musikalischen Wurzeln zu einem unverwechselbaren Sound vereinen. Alleinstellungsmerkmale der Pop-Rock Formation sind die melodischen Klänge des Saxophons, emotionsgeladener mehrstimmiger Gesang und träumerische Songtexte. Auf der Bühne überzeugt die Band mit Leidenschaft, Energie \nund einer Präsenz, die ihre Songs für alle greifbar und erlebbar macht. Kurz gesagt: - Musik, die verbindet! Drei Singles sind bereits auf allen Streaming-Plattformen zu hören - neue Songs stehen schon in den Startlöchern!",
   "directions": "Directions",
@@ -10,5 +11,6 @@
   "no_upcoming_gigs": "Follow us on Instagram for news on the next upcoming gigs!",
   "past_gigs": "Past gigs:",
   "title": "Current Street",
+  "ticket": "Tickets",
   "upcoming_gigs": "Upcoming gigs:"
 }

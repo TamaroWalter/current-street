@@ -9,7 +9,7 @@ import './About.css';
 export default function About() {
   return (
     <Container className="about-root">
-      <SlideShow />
+      <SlideShow/>
       <BandDescription/>
     </Container>
   );
@@ -19,7 +19,7 @@ const SlideShow = () => {
   return (
      <Carousel.Root
         slideCount={photos.length}
-        maxW={{base: "2xl", md: "3xl"}}
+        maxW="2xl"
         mx="auto"
         gap="4"
         position="relative"
@@ -62,7 +62,7 @@ const SlideShow = () => {
 const BandDescription = () => {
   return (
     <Blockquote.Root className="background-box band-description" justify="center">
-      <Blockquote.Content>
+      <Blockquote.Content whiteSpace="pre-line">
         {getString("currentstreet_description")}
       </Blockquote.Content>
     </Blockquote.Root>

@@ -1,5 +1,4 @@
 // Imports from react and UI library.
-import { useContext } from 'react';
 import { BrowserRouter, Routes, Route, Link, useLocation} from 'react-router-dom';
 import { Button, Flex, Box, Text,  Container, HStack, Link as ChakraLink, Icon, Stack} from '@chakra-ui/react';
 
@@ -27,15 +26,15 @@ export default function App() {
     <BrowserRouter>
       <Box className="app-container">
         <AppHeader/>
-
-        <Container as="main" className="main-content">
-          <Routes>
-            <Route path="/" element={<Home/>} />
-            <Route path="/about" element={<About/>} />
-            <Route path="/live" element={<Live/>} />
-          </Routes>
-        </Container>
-
+          <Box className="main-scroll">
+            <Box as="main" className="main-content">
+              <Routes>
+                <Route path="/" element={<Home/>} />
+                <Route path="/about" element={<About/>} />
+                <Route path="/live" element={<Live/>} />
+              </Routes>
+            </Box>
+          </Box>
         <AppFooter/>
       </Box>
     </BrowserRouter>

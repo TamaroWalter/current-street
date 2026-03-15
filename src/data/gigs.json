@@ -5,7 +5,9 @@
     "time": 1778860800,
     "city": "Münster",
     "adress": "Scharnhorststraße 106, 48151",
-    "location": "51.950875403490386, 7.607699185848716"
+    "location": "51.950875403490386, 7.607699185848716",
+    "description": "Current Street & Paperthin Fleet!\n Wir spielen gemeinsam in der Baracke und es wird richtig abgehen, kommt vorbei!\n Eintritt auf Spendenbasis",
+    "ticketUrl": ""
   },
   {
     "id": 10,
@@ -13,7 +15,9 @@
     "time": 1778333400,
     "city": "Münster",
     "adress": "Neubrückenstraße 63, 48143",
-    "location": "51.964707600586976, 7.629003176206453"
+    "location": "51.964707600586976, 7.629003176206453",
+    "description": "Deutschlands größtes Festival der Hochschulkultur, und wir sind mittendrin! Am Samstag im gemütlichen Theatertreff gibt es eine entspannte Akustiksession.",
+    "ticketUrl": "https://neue-waende.de/"
   },
   {
     "id": 9,
@@ -21,7 +25,9 @@
     "time": 1776009600,
     "city": "Münster",
     "adress": "Am Hawerkamp 31C, 48155",
-    "location": "51.94437997026188, 7.638224579263231"
+    "location": "51.94406585747347, 7.638549290461162",
+    "description": "SPH Music Master ist der größte Live-Musikwettbewerb Europas. Wir spielen in der Vorrunde um die Weiterleitung zum Stadtfinale und sind auf eure Unterstützung angewiesen!\n Wählt beim Ticketkauf \"Current Street\" aus!",
+    "ticketUrl": "https://www.sph-music-masters.de/tickets"
   },
   {
     "id": 8,

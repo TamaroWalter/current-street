@@ -40,5 +40,11 @@
     "name": "all_alone_cover",
     "source": "/pix/all_alone_cover.jpeg",
     "alt": "All alone cover image"
+  },
+  {
+    "id": 7,
+    "name": "city_light_cover",
+    "source": "/pix/city_lights_cover.jpg",
+    "alt": "City lights cover image"
   }
 ]

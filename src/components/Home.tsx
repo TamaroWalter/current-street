@@ -4,11 +4,11 @@ import photos from "../data/photos.json";
 
 import './Home.css';
 export default function Home() {
-  const photo = photos.find(gig => gig.name == "all_alone_cover");
+  const photo = photos.find(gig => gig.name == "city_light_cover");
   return (
       <Stack className="home-root">
         <ChakraLink className="footer-social"
-                    href={"https://open.spotify.com/intl-de/album/2A0Lc9jyeEoXT25PywOCsE?si=OoqQ5orSSjiOYU0p41RRAQ"}
+                    href={"https://open.spotify.com/album/0m7NLH39VIxdKQu7b9Qor8?si=leUWrvx5RiSf9U-ZU-FQAg"}
                     colorPalette="gray"
                     target="_blank"
                     rel="noopener noreferrer"
