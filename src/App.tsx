@@ -45,11 +45,6 @@ function AppHeader() {
   const location = useLocation();
   return (
     <Box as="header" className="header">
-      <Box className="header-child">
-        <Text fontSize="36px" fontFamily={"impact"} fontWeight="bolder"> 
-          Current Street
-        </Text>
-      </Box>
       <Container className="header-child">
         <Flex gap="2" className="background-box">
           {navigation.map(({route, text}) => (
