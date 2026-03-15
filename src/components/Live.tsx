@@ -23,6 +23,7 @@ const GigCard = ({id, name, time, city, adress, location, description, ticketUrl
   const dateStr = date.toLocaleString('de-DE', dateOpt);
   const timeStr = date.toLocaleString('de-DE', timeOpt);
   const mapsQuery = `${adress}, ${city}, ${location}`;
+  const calendarlocation = adress + ', ' + city;
 
   return (
     <Collapsible.Root>
@@ -67,16 +68,16 @@ const GigCard = ({id, name, time, city, adress, location, description, ticketUrl
                         <Menu.Positioner>
                           <Menu.Content minW={{base: "0", md: "15rem"}} minH={{base: "0", md: "7rem"}}>
                             <Menu.Item value="google" fontSize="md" p="0.75rem 1rem" asChild>
-                              <a href={getGoogleCalendarUrl(name, time, adress!, description, ticketUrl)} target="_blank" rel="noopener noreferrer">
+                              <a href={getGoogleCalendarUrl(name, time, calendarlocation, description, ticketUrl)} target="_blank" rel="noopener noreferrer">
                                 {getIcon('googlecalendar')} {getString('googlecalendar')}
                               </a>
                             </Menu.Item>
                             <Menu.Item value="outlook" fontSize="md" p="0.75rem 1rem" asChild>
-                              <a href={getOutlookCalendarUrl(name, time, adress!, description, ticketUrl)} target="_blank" rel="noopener noreferrer">
+                              <a href={getOutlookCalendarUrl(name, time, calendarlocation, description, ticketUrl)} target="_blank" rel="noopener noreferrer">
                                 {getIcon('outlook')} {getString('outlook')}
                               </a>
                             </Menu.Item>
-                            <Menu.Item value="ics" fontSize="md" p="0.75rem 1rem" onClick={() => downloadICS(name, time, adress!, description, ticketUrl)}>
+                            <Menu.Item value="ics" fontSize="md" p="0.75rem 1rem" onClick={() => downloadICS(name, time, calendarlocation, description, ticketUrl)}>
                               {getIcon('apple')} {getString('saveics')}
                             </Menu.Item>
                           </Menu.Content>
@@ -137,7 +138,7 @@ export default function Live() {
             <Stack className="live-dates" gap="1rem">
               {upcomingGigs.length > 0 ? (
                 upcomingGigs.toReversed().map((gig) => (
-                  <GigCard 
+                  <GigCard
                     key={gig.id}
                     id={gig.id}
                     name={gig.name}
