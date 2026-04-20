@@ -1,7 +1,8 @@
 import { SiSpotify, SiInstagram, SiYoutube, SiApple, SiGmail, SiGooglemaps, SiGooglecalendar, SiGithub } from 'react-icons/si'
 import { PiMicrosoftOutlookLogoFill } from "react-icons/pi";
 import { type ReactElement } from 'react';
-import { LuArrowLeft, LuArrowRight, LuChevronDown, LuTicket, LuCalendarPlus} from "react-icons/lu"
+import { LuArrowLeft, LuArrowRight, LuChevronDown, LuTicket, LuCalendarPlus, LuX} from "react-icons/lu"
+import { SlMenu } from "react-icons/sl";
 
 export function getIcon(iconName: keyof typeof iconMap): ReactElement | null {
   const Icon = iconMap[iconName];
@@ -24,5 +25,7 @@ export const iconMap = {
   calendarsave: LuCalendarPlus,
   googlecalendar: SiGooglecalendar,
   outlook: PiMicrosoftOutlookLogoFill,
+  menu: SlMenu,
+  close: LuX,
 } as const;
 
