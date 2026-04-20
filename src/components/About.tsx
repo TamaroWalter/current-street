@@ -4,12 +4,11 @@ import { forwardRef } from "react"
 import { getIcon} from '../core/lib';
 import { useTranslation } from '../core/LanguageContext';
 import photos from "../data/photos.json";
-import './About.css';
 
 
 export default function About() {
   return (
-    <Container className="about-root">
+    <Container minH="30rem" h="100%" w="100%">
       <SlideShow/>
       <BandDescription/>
     </Container>
@@ -63,7 +62,7 @@ const SlideShow = () => {
 const BandDescription = () => {
   const { getString } = useTranslation();
   return (
-    <Blockquote.Root className="background-box band-description" justify="center">
+    <Blockquote.Root className="background-box" mt="2rem" justify="center">
       <Blockquote.Content whiteSpace="pre-line">
         {getString("currentstreet_description")}
       </Blockquote.Content>

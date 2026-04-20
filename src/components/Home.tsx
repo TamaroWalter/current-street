@@ -2,12 +2,11 @@ import {Stack, Card, Image, Link as ChakraLink} from "@chakra-ui/react";
 import { useTranslation } from '../core/LanguageContext';
 import photos from "../data/photos.json";
 
-import './Home.css';
 export default function Home() {
   const { getString } = useTranslation();
   const photo = photos.find(gig => gig.name == "city_light_cover");
   return (
-      <Stack className="home-root">
+      <Stack w="100%" display="flex" justify="center" align="center">
         <ChakraLink className="footer-social"
                     href={"https://open.spotify.com/album/0m7NLH39VIxdKQu7b9Qor8?si=leUWrvx5RiSf9U-ZU-FQAg"}
                     colorPalette="gray"
