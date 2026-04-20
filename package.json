@@ -12,7 +12,7 @@
     "deploy": "echo 'built successfully'"
   },
   "dependencies": {
-    "@chakra-ui/react": "^3.28.0",
+    "@chakra-ui/react": "^3.34.0",
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.1",
     "framer-motion": "^12.23.24",
