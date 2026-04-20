@@ -1,7 +1,8 @@
 import {Container, Button, Text, Flex, Menu, Stack, VStack, Box, Collapsible, Portal} from "@chakra-ui/react";
-import { getIcon, getString, downloadICS, getGoogleCalendarUrl, getOutlookCalendarUrl} from "../core/lib";
+import { getIcon} from "../core/lib";
+import { getCalendarUrl, type CalendarAction } from "../core/calendar";
+import { useTranslation } from '../core/LanguageContext';
 import gigs from "../data/gigs.json";
-import './Live.css';
 
 interface Gig {
   id: number;
@@ -15,20 +16,32 @@ interface Gig {
 }
 
 const GigCard = ({id, name, time, city, adress, location, description, ticketUrl}: Gig) => {
+  const { getString, getTimeFormat } = useTranslation();
   // Get the date and time from the timestamp with seconds time.
   const date = new Date(time * 1000);
-  // Get the date in format DD Month YY and the time in format HH:MM for a german timezone.
-  const dateOpt: Intl.DateTimeFormatOptions = { timeZone: 'Europe/Berlin', year: 'numeric', month: '2-digit', day: '2-digit'};
-  const timeOpt: Intl.DateTimeFormatOptions = { timeZone: 'Europe/Berlin', hour: '2-digit', minute: '2-digit' };
-  const dateStr = date.toLocaleString('de-DE', dateOpt);
-  const timeStr = date.toLocaleString('de-DE', timeOpt);
+  const dateStr = date.toLocaleString(getTimeFormat(), { timeZone: 'Europe/Berlin', year: 'numeric', month: '2-digit', day: '2-digit'});
+  const timeStr = date.toLocaleString(getTimeFormat(), { timeZone: 'Europe/Berlin', hour: '2-digit', minute: '2-digit' });
   const mapsQuery = `${adress}, ${city}, ${location}`;
   const calendarlocation = adress + ', ' + city;
 
+  const handleAddToCalendar = (action: CalendarAction) => {
+    const result = getCalendarUrl(action, name, time, calendarlocation, description, ticketUrl);
+    
+    if (action === 'ics') {
+      const link = document.createElement('a');
+      link.href = URL.createObjectURL(result as Blob);
+      link.download = `CurrentStreet-${name}.ics`;
+      link.click();
+      URL.revokeObjectURL(link.href);
+    } else {
+      window.open(result as string, '_blank');
+    }
+  };
+
   return (
     <Collapsible.Root>
-      <Container key={id} className="live-gig" minH="3rem" w="100%" maxW={{ base: "100%", md: "50rem", lg: "64rem", xl: "72rem" }}>
-        <Box className="live-gig-header" pt="3" display="flex" w="100%" justifyContent="space-between">
+      <Container key={id} minH="3rem" w="100%" maxW={{ base: "100%", md: "50rem" }} outline="2px solid" outlineColor="#1C1C1E" borderRadius="0.75rem" overflow="hidden" bg="#eaeaea">
+        <Box pt="3" display="flex" w="100%" justifyContent="space-between">
           <Flex w="100%" gap="0.5rem" direction={{ base: "column", md: "row" }} align={{ base: "start", md: "center" }}>
             <Text fontSize="2xl" fontWeight="bold">{dateStr}</Text>
             <Text fontSize="2xl" fontWeight="bold">{name}</Text>
@@ -42,42 +55,38 @@ const GigCard = ({id, name, time, city, adress, location, description, ticketUrl
             </Collapsible.Trigger>
         </Box>
         <Stack direction={{ base: "column", md: "row" }} align="stretch">
-          <Box className="live-gig-info" display="flex" flexDirection="column" w={{base: "100%", md: "70%"}}>
+          <Box h="100%" p="0.75rem" display="flex" flexDirection="column" w={{base: "100%", md: "70%"}} justifyContent="center">
               <Box w="100%">
-                <Collapsible.Content className="live-gig-description">
+                <Collapsible.Content>
                   <Text whiteSpace="pre-line"> {description} </Text>
                 </Collapsible.Content>
               </Box>
           </Box>
           <Flex p="0.75rem" pt="0" w={{base: "100%", md: "30%"}} alignSelf={{base:"center", md:"flex-start"}} align="center" justify={{ base: "center", md: "flex-end" }}>
             <VStack>
-              <Button className="live-gig-action" rounded="md" size="md" w="100%" asChild>
+              <Button color="#1C1C1E" bg="#a1aaaa" rounded="md" size="md" w="100%" asChild _hover={{ transform: 'scale(1.05)', bg: '#ca6164', transition: 'transform 0.2s' }}>
                 <a href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(mapsQuery)}`} target="_blank" rel="noopener noreferrer">
                   {getString("directions")} {getIcon('googlemaps')}
                 </a>
               </Button>
-                <Collapsible.Content className="live-gig-description" w="100%">
+                <Collapsible.Content w="100%">
                   <Stack direction={{ base: "row", md: "column" }}>
                     <Menu.Root>
                       <Menu.Trigger asChild>
-                        <Button className="live-gig-action" rounded="md" size="md">
+                        <Button color="#1C1C1E" bg="#a1aaaa" rounded="md" size="md" _hover={{ transform: 'scale(1.05)', bg: '#ca6164', transition: 'transform 0.2s' }}>
                           {getString('calendar')} {getIcon('calendarsave')}
                         </Button>
                       </Menu.Trigger>
                       <Portal>
                         <Menu.Positioner>
                           <Menu.Content minW={{base: "0", md: "15rem"}} minH={{base: "0", md: "7rem"}}>
-                            <Menu.Item value="google" fontSize="md" p="0.75rem 1rem" asChild>
-                              <a href={getGoogleCalendarUrl(name, time, calendarlocation, description, ticketUrl)} target="_blank" rel="noopener noreferrer">
-                                {getIcon('googlecalendar')} {getString('googlecalendar')}
-                              </a>
+                            <Menu.Item value="google" fontSize="md" p="0.75rem 1rem" onClick={() => handleAddToCalendar('google')}>
+                              {getIcon('googlecalendar')} {getString('googlecalendar')}
                             </Menu.Item>
-                            <Menu.Item value="outlook" fontSize="md" p="0.75rem 1rem" asChild>
-                              <a href={getOutlookCalendarUrl(name, time, calendarlocation, description, ticketUrl)} target="_blank" rel="noopener noreferrer">
-                                {getIcon('outlook')} {getString('outlook')}
-                              </a>
+                            <Menu.Item value="outlook" fontSize="md" p="0.75rem 1rem" onClick={() => handleAddToCalendar('outlook')}>
+                              {getIcon('outlook')} {getString('outlook')}
                             </Menu.Item>
-                            <Menu.Item value="ics" fontSize="md" p="0.75rem 1rem" onClick={() => downloadICS(name, time, calendarlocation, description, ticketUrl)}>
+                            <Menu.Item value="ics" fontSize="md" p="0.75rem 1rem" onClick={() => handleAddToCalendar('ics')}>
                               {getIcon('apple')} {getString('saveics')}
                             </Menu.Item>
                           </Menu.Content>
@@ -85,7 +94,7 @@ const GigCard = ({id, name, time, city, adress, location, description, ticketUrl
                       </Portal>
                     </Menu.Root>
                     {ticketUrl && (
-                      <Button className="live-gig-action" rounded="md" size="md" asChild>
+                      <Button color="#1C1C1E" bg="#a1aaaa" rounded="md" size="md" asChild _hover={{ transform: 'scale(1.05)', bg: '#ca6164', transition: 'transform 0.2s' }}>
                         <a href={ticketUrl} target="_blank" rel="noopener noreferrer">
                           {getString('ticket')} {getIcon('ticket')}
                         </a>
@@ -110,9 +119,9 @@ const PastGigCard = ({id, name, time, city} : Gig) => {
   const dateStr = date.toLocaleString('de-DE', dateOpt);
 
   return (
-     <Container key={id} className="live-gig" minH="3rem" maxW="50rem">
-      <Box className="live-gig-info" height="100%" w={{base: "100%", md: "100%"}}>
-        <VStack align="start" gap="1rem" height="100%">
+     <Container key={id} minH="3rem" maxW="50rem" outline="2px solid" outlineColor="#1C1C1E" borderRadius="0.75rem" overflow="hidden" bg="#eaeaea">
+      <Box h="100%" p="0.75rem" w={{base: "100%", md: "100%"}} display="flex" justifyContent="center">
+        <VStack align="start" gap="1rem" h="100%">
           <Flex w="100%" gap="0.5rem" direction={{ base: "column", md: "row" }} justify="center">
             <Text fontSize="xl" fontWeight="bold">{dateStr} - {name}</Text>
             <Text fontSize="xl" fontWeight="bold">({city})</Text>
@@ -124,6 +133,7 @@ const PastGigCard = ({id, name, time, city} : Gig) => {
 }
 
 export default function Live() {
+  const { getString } = useTranslation();
   const now = Date.now() / 1000;
   const upcomingGigs = gigs.filter(gig => gig.time >= now);
   const pastGigs = gigs.filter(gig => gig.time < now);
@@ -135,7 +145,7 @@ export default function Live() {
             <Text fontSize="3xl" fontWeight="bold">{getString("upcoming_gigs")}</Text>
           </Flex>
           <Container w="100%" pt="1rem" maxW={{ base: "100%", md: "50rem", lg: "64rem", xl: "72rem" }}>
-            <Stack className="live-dates" gap="1rem">
+            <Stack justify="center" align="stretch" gap="1rem">
               {upcomingGigs.length > 0 ? (
                 upcomingGigs.toReversed().map((gig) => (
                   <GigCard
@@ -153,12 +163,19 @@ export default function Live() {
                 <Stack>
                   <Text fontSize="xl" fontWeight="bold"> {getString("no_upcoming_gigs")}</Text>
                   <iframe
-                    className="spotify-embed"
+                     style={{
+                      width: '100%',
+                      height: '80vh',
+                      maxWidth: '50rem',
+                      maxHeight: '30rem',
+                      borderRadius: '0.75rem',
+                      border: 'none'
+                    }}
                     src="https://open.spotify.com/embed/artist/4S3tOMrY2Xj9zhnmema3M3?utm_source=generator"
                     allowFullScreen
                     allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-                    loading="lazy">
-                  </iframe>
+                    loading="lazy"
+                  />
                 </Stack>
               )
               }
@@ -170,7 +187,7 @@ export default function Live() {
             <Text fontSize="3xl" fontWeight="bold">{getString("past_gigs")}</Text>
           </Flex>
           <Container maxW="50rem" pl={{base: "0.1rem", md: "6.5rem"}} pr={{base: "0.1rem", md: "6.5rem"}}>
-            <Stack className="live-dates" gap="1rem">
+            <Stack justify="center" align="stretch" gap="1rem">
               {pastGigs.map((gig) => (
                 <PastGigCard key={gig.id} id={gig.id} name={gig.name} time={gig.time} city={gig.city} />
               ))}
