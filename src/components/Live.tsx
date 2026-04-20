@@ -1,5 +1,7 @@
 import {Container, Button, Text, Flex, Menu, Stack, VStack, Box, Collapsible, Portal} from "@chakra-ui/react";
-import { getIcon, getString, downloadICS, getGoogleCalendarUrl, getOutlookCalendarUrl} from "../core/lib";
+import { getIcon} from "../core/lib";
+import { getCalendarUrl, type CalendarAction } from "../core/calendar";
+import { useTranslation } from '../core/LanguageContext';
 import gigs from "../data/gigs.json";
 import './Live.css';
 
@@ -15,15 +17,27 @@ interface Gig {
 }
 
 const GigCard = ({id, name, time, city, adress, location, description, ticketUrl}: Gig) => {
+  const { getString, getTimeFormat } = useTranslation();
   // Get the date and time from the timestamp with seconds time.
   const date = new Date(time * 1000);
-  // Get the date in format DD Month YY and the time in format HH:MM for a german timezone.
-  const dateOpt: Intl.DateTimeFormatOptions = { timeZone: 'Europe/Berlin', year: 'numeric', month: '2-digit', day: '2-digit'};
-  const timeOpt: Intl.DateTimeFormatOptions = { timeZone: 'Europe/Berlin', hour: '2-digit', minute: '2-digit' };
-  const dateStr = date.toLocaleString('de-DE', dateOpt);
-  const timeStr = date.toLocaleString('de-DE', timeOpt);
+  const dateStr = date.toLocaleString(getTimeFormat(), { timeZone: 'Europe/Berlin', year: 'numeric', month: '2-digit', day: '2-digit'});
+  const timeStr = date.toLocaleString(getTimeFormat(), { timeZone: 'Europe/Berlin', hour: '2-digit', minute: '2-digit' });
   const mapsQuery = `${adress}, ${city}, ${location}`;
   const calendarlocation = adress + ', ' + city;
+
+  const handleAddToCalendar = (action: CalendarAction) => {
+    const result = getCalendarUrl(action, name, time, calendarlocation, description, ticketUrl);
+    
+    if (action === 'ics') {
+      const link = document.createElement('a');
+      link.href = URL.createObjectURL(result as Blob);
+      link.download = `CurrentStreet-${name}.ics`;
+      link.click();
+      URL.revokeObjectURL(link.href);
+    } else {
+      window.open(result as string, '_blank');
+    }
+  };
 
   return (
     <Collapsible.Root>
@@ -67,17 +81,13 @@ const GigCard = ({id, name, time, city, adress, location, description, ticketUrl
                       <Portal>
                         <Menu.Positioner>
                           <Menu.Content minW={{base: "0", md: "15rem"}} minH={{base: "0", md: "7rem"}}>
-                            <Menu.Item value="google" fontSize="md" p="0.75rem 1rem" asChild>
-                              <a href={getGoogleCalendarUrl(name, time, calendarlocation, description, ticketUrl)} target="_blank" rel="noopener noreferrer">
-                                {getIcon('googlecalendar')} {getString('googlecalendar')}
-                              </a>
+                            <Menu.Item value="google" fontSize="md" p="0.75rem 1rem" onClick={() => handleAddToCalendar('google')}>
+                              {getIcon('googlecalendar')} {getString('googlecalendar')}
                             </Menu.Item>
-                            <Menu.Item value="outlook" fontSize="md" p="0.75rem 1rem" asChild>
-                              <a href={getOutlookCalendarUrl(name, time, calendarlocation, description, ticketUrl)} target="_blank" rel="noopener noreferrer">
-                                {getIcon('outlook')} {getString('outlook')}
-                              </a>
+                            <Menu.Item value="outlook" fontSize="md" p="0.75rem 1rem" onClick={() => handleAddToCalendar('outlook')}>
+                              {getIcon('outlook')} {getString('outlook')}
                             </Menu.Item>
-                            <Menu.Item value="ics" fontSize="md" p="0.75rem 1rem" onClick={() => downloadICS(name, time, calendarlocation, description, ticketUrl)}>
+                            <Menu.Item value="ics" fontSize="md" p="0.75rem 1rem" onClick={() => handleAddToCalendar('ics')}>
                               {getIcon('apple')} {getString('saveics')}
                             </Menu.Item>
                           </Menu.Content>
@@ -124,6 +134,7 @@ const PastGigCard = ({id, name, time, city} : Gig) => {
 }
 
 export default function Live() {
+  const { getString } = useTranslation();
   const now = Date.now() / 1000;
   const upcomingGigs = gigs.filter(gig => gig.time >= now);
   const pastGigs = gigs.filter(gig => gig.time < now);

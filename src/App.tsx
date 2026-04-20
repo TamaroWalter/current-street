@@ -3,8 +3,8 @@ import { BrowserRouter, Routes, Route, Link, useLocation} from 'react-router-dom
 import { Button, Flex, Box, Text,  Container, HStack, Link as ChakraLink, Icon, Stack} from '@chakra-ui/react';
 
 // Import core.
-import { getIcon, getString } from './core/lib';
-import { useLanguage } from './core/LanguageContext';
+import { getIcon, iconMap } from './core/lib';
+import { useLanguage, useTranslation } from './core/LanguageContext';
 // Import components styling.
 import './App.css';
 
@@ -42,6 +42,7 @@ export default function App() {
 }
 
 function AppHeader() {
+  const { getString } = useTranslation();
   const location = useLocation();
   return (
     <Box as="header" className="header">
@@ -59,6 +60,7 @@ function AppHeader() {
 }
 
 function AppFooter() {
+  const { getString } = useTranslation(); 
   const { language, setLanguage } = useLanguage();
   return (
     <Container as="footer" className="footer" >
@@ -67,7 +69,7 @@ function AppFooter() {
           <HStack gap="4">
             {social.map(({ i, href, icon }) => (
               <ChakraLink className="footer-social" key={i} href={href} colorPalette="gray" target="_blank" rel="noopener noreferrer">
-                <Icon size="lg">{getIcon(icon)}</Icon>
+                <Icon size="lg">{getIcon(icon as keyof typeof iconMap)}</Icon>
               </ChakraLink>
             ))}
           </HStack>

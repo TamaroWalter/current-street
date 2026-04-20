@@ -1,9 +1,10 @@
 import {Stack, Card, Image, Link as ChakraLink} from "@chakra-ui/react";
-import {getString} from "../core/lib";
+import { useTranslation } from '../core/LanguageContext';
 import photos from "../data/photos.json";
 
 import './Home.css';
 export default function Home() {
+  const { getString } = useTranslation();
   const photo = photos.find(gig => gig.name == "city_light_cover");
   return (
       <Stack className="home-root">

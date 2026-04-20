@@ -1,7 +1,8 @@
 import type { IconButtonProps } from "@chakra-ui/react"
 import { AspectRatio, Box, Carousel, Container, IconButton, Image, Blockquote } from "@chakra-ui/react"
 import { forwardRef } from "react"
-import { getIcon, getString } from '../core/lib';
+import { getIcon} from '../core/lib';
+import { useTranslation } from '../core/LanguageContext';
 import photos from "../data/photos.json";
 import './About.css';
 
@@ -60,6 +61,7 @@ const SlideShow = () => {
 }
 
 const BandDescription = () => {
+  const { getString } = useTranslation();
   return (
     <Blockquote.Root className="background-box band-description" justify="center">
       <Blockquote.Content whiteSpace="pre-line">
