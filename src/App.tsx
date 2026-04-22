@@ -1,6 +1,6 @@
 // Imports from react and UI library.
 import { BrowserRouter, Routes, Route, Link, useLocation, useNavigate} from 'react-router-dom';
-import { Button, Flex, Box, Text,  Container, HStack, Link as ChakraLink, Icon, Stack, Drawer, IconButton, Portal, CloseButton, Image, VStack} from '@chakra-ui/react';
+import { Button, Flex, Box, Text,  Container, HStack, Link as ChakraLink, Icon, Stack, Drawer, IconButton, Portal, CloseButton, Spacer, VStack} from '@chakra-ui/react';
 import { useState } from 'react';
 // Import core.
 import { getIcon, iconMap } from './core/lib';
@@ -75,8 +75,8 @@ function MobileNav() {
               _open={{animationDuration: "0.5s",}}
             >
               <Drawer.Header/>
-              <Drawer.Body display="flex" justifyContent="center" alignItems="center" h="100%">
-                <VStack h="100%">
+              <Drawer.Body display="flex" flexDirection="column" h="100%">
+                <VStack pt="2rem">
                   {navigation.map(({route, text}) => (
                     <Button
                     w="100%"
@@ -92,9 +92,21 @@ function MobileNav() {
                     </Button>
                   ))}
                 </VStack>
+                <Spacer/>
+                <VStack bg="#a1aaaa" borderRadius="2xl" borderColor="#1c1c1e" borderWidth="2px">
+                  <Text pt="1.2rem" pb="0.2rem" fontSize="lg" fontWeight="bold" color="#1c1c1e">{getString('social_media')}</Text>
+                  <Spacer/>
+                  <HStack pt="0.2rem" pb="1.2rem" gap="4" >
+                  {social.filter(({icon}) => ['instagram', 'youtube', 'spotify', 'apple'].includes(icon)).map(({ i, href, icon }) => (
+                    <ChakraLink className="footer-social" key={i} href={href} target="_blank" rel="noopener noreferrer">
+                      <Icon size="xl" color="">{getIcon(icon as keyof typeof iconMap)}</Icon>
+                    </ChakraLink>
+                  ))}
+                </HStack>
+                </VStack>
               </Drawer.Body>
               <Drawer.Footer>
-                <Button size="xl" variant="plain" className="footer-togglelang" onClick={() => setLanguage(language === 'en' ? 'de' : 'en')}>
+                <Button size="xl" borderWidth="2px" variant="plain" className="footer-togglelang" onClick={() => setLanguage(language === 'en' ? 'de' : 'en')}>
                   {getString("lang_toggle")}
                 </Button>
               </Drawer.Footer>
@@ -129,7 +141,7 @@ function AppFooter() {
   const { getString } = useTranslation(); 
   const { language, setLanguage } = useLanguage();
   return (
-    <Container as="footer" className="footer" >
+    <Container as="footer" className="footer" display={{base: "none", md: "block"}}>
       <Stack gap="6">
         <Stack direction="row" justify="space-between" align="center">
           <HStack gap="4">

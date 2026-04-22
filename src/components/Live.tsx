@@ -69,39 +69,39 @@ const GigCard = ({id, name, time, city, adress, location, description, ticketUrl
                   {getString("directions")} {getIcon('googlemaps')}
                 </a>
               </Button>
-                <Collapsible.Content w="100%">
-                  <Stack direction={{ base: "row", md: "column" }}>
-                    <Menu.Root>
-                      <Menu.Trigger asChild>
-                        <Button color="#1C1C1E" bg="#a1aaaa" rounded="md" size="md" _hover={{ transform: 'scale(1.05)', bg: '#ca6164', transition: 'transform 0.2s' }}>
-                          {getString('calendar')} {getIcon('calendarsave')}
-                        </Button>
-                      </Menu.Trigger>
-                      <Portal>
-                        <Menu.Positioner>
-                          <Menu.Content minW={{base: "0", md: "15rem"}} minH={{base: "0", md: "7rem"}}>
-                            <Menu.Item value="google" fontSize="md" p="0.75rem 1rem" onClick={() => handleAddToCalendar('google')}>
-                              {getIcon('googlecalendar')} {getString('googlecalendar')}
-                            </Menu.Item>
-                            <Menu.Item value="outlook" fontSize="md" p="0.75rem 1rem" onClick={() => handleAddToCalendar('outlook')}>
-                              {getIcon('outlook')} {getString('outlook')}
-                            </Menu.Item>
-                            <Menu.Item value="ics" fontSize="md" p="0.75rem 1rem" onClick={() => handleAddToCalendar('ics')}>
-                              {getIcon('apple')} {getString('saveics')}
-                            </Menu.Item>
-                          </Menu.Content>
-                        </Menu.Positioner>
-                      </Portal>
-                    </Menu.Root>
-                    {ticketUrl && (
-                      <Button color="#1C1C1E" bg="#a1aaaa" rounded="md" size="md" asChild _hover={{ transform: 'scale(1.05)', bg: '#ca6164', transition: 'transform 0.2s' }}>
-                        <a href={ticketUrl} target="_blank" rel="noopener noreferrer">
-                          {getString('ticket')} {getIcon('ticket')}
-                        </a>
+              <Collapsible.Content w="100%">
+                <Stack direction={{ base: "row", md: "column" }}>
+                  <Menu.Root>
+                    <Menu.Trigger asChild>
+                      <Button color="#1C1C1E" bg="#a1aaaa" rounded="md" size="md" _hover={{ transform: 'scale(1.05)', bg: '#ca6164', transition: 'transform 0.2s' }}>
+                        {getString('calendar')} {getIcon('calendarsave')}
                       </Button>
-                    )}
-                  </Stack>
-                </Collapsible.Content>
+                    </Menu.Trigger>
+                    <Portal>
+                      <Menu.Positioner>
+                        <Menu.Content minW={{base: "0", md: "15rem"}} minH={{base: "0", md: "7rem"}}>
+                          <Menu.Item value="google" fontSize="md" p="0.75rem 1rem" onClick={() => handleAddToCalendar('google')}>
+                            {getIcon('googlecalendar')} {getString('googlecalendar')}
+                          </Menu.Item>
+                          <Menu.Item value="outlook" fontSize="md" p="0.75rem 1rem" onClick={() => handleAddToCalendar('outlook')}>
+                            {getIcon('outlook')} {getString('outlook')}
+                          </Menu.Item>
+                          <Menu.Item value="ics" fontSize="md" p="0.75rem 1rem" onClick={() => handleAddToCalendar('ics')}>
+                            {getIcon('apple')} {getString('saveics')}
+                          </Menu.Item>
+                        </Menu.Content>
+                      </Menu.Positioner>
+                    </Portal>
+                  </Menu.Root>
+                  {ticketUrl && (
+                    <Button color="#1C1C1E" bg="#a1aaaa" rounded="md" size="md" asChild _hover={{ transform: 'scale(1.05)', bg: '#ca6164', transition: 'transform 0.2s' }}>
+                      <a href={ticketUrl} target="_blank" rel="noopener noreferrer">
+                        {getString('ticket')} {getIcon('ticket')}
+                      </a>
+                    </Button>
+                  )}
+                </Stack>
+              </Collapsible.Content>
             </VStack>
           </Flex>
         </Stack>
