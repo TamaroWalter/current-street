@@ -1,5 +1,6 @@
 import {Container, Button, Text, Flex, Menu, Stack, VStack, Box, Collapsible, Portal} from "@chakra-ui/react";
-import { getIcon} from "../core/lib";
+import { getIcon } from "../core/lib";
+import { colors } from "../core/theme";
 import { getCalendarUrl, type CalendarAction } from "../core/calendar";
 import { useTranslation } from '../core/LanguageContext';
 import gigs from "../data/gigs.json";
@@ -40,7 +41,7 @@ const GigCard = ({id, name, time, city, adress, location, description, ticketUrl
 
   return (
     <Collapsible.Root>
-      <Container key={id} minH="3rem" w="100%" maxW={{ base: "100%", md: "50rem" }} outline="2px solid" outlineColor="#1C1C1E" borderRadius="0.75rem" overflow="hidden" bg="#eaeaea">
+      <Container key={id} minH="3rem" w="100%" maxW={{ base: "100%", md: "50rem" }} borderWidth="2px" borderColor={colors.text} borderRadius="0.75rem" overflow="hidden" bg={colors.accentwhite}>
         <Box pt="3" display="flex" w="100%" justifyContent="space-between">
           <Flex w="100%" gap="0.5rem" direction={{ base: "column", md: "row" }} align={{ base: "start", md: "center" }}>
             <Text fontSize="2xl" fontWeight="bold">{dateStr}</Text>
@@ -64,7 +65,7 @@ const GigCard = ({id, name, time, city, adress, location, description, ticketUrl
           </Box>
           <Flex p="0.75rem" pt="0" w={{base: "100%", md: "30%"}} alignSelf={{base:"center", md:"flex-start"}} align="center" justify={{ base: "center", md: "flex-end" }}>
             <VStack>
-              <Button color="#1C1C1E" bg="#a1aaaa" rounded="md" size="md" w="100%" asChild _hover={{ transform: 'scale(1.05)', bg: '#ca6164', transition: 'transform 0.2s' }}>
+              <Button color={colors.text} bg={colors.accentgreen} rounded="md" size="md" w="100%" asChild _hover={{ transform: 'scale(1.05)', bg: colors.hover, transition: 'transform 0.2s' }}>
                 <a href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(mapsQuery)}`} target="_blank" rel="noopener noreferrer">
                   {getString("directions")} {getIcon('googlemaps')}
                 </a>
@@ -73,7 +74,7 @@ const GigCard = ({id, name, time, city, adress, location, description, ticketUrl
                 <Stack direction={{ base: "row", md: "column" }}>
                   <Menu.Root>
                     <Menu.Trigger asChild>
-                      <Button color="#1C1C1E" bg="#a1aaaa" rounded="md" size="md" _hover={{ transform: 'scale(1.05)', bg: '#ca6164', transition: 'transform 0.2s' }}>
+                      <Button color={colors.text} bg={colors.accentgreen} rounded="md" size="md" _hover={{ transform: 'scale(1.05)', bg: colors.hover, transition: 'transform 0.2s' }}>
                         {getString('calendar')} {getIcon('calendarsave')}
                       </Button>
                     </Menu.Trigger>
@@ -94,7 +95,7 @@ const GigCard = ({id, name, time, city, adress, location, description, ticketUrl
                     </Portal>
                   </Menu.Root>
                   {ticketUrl && (
-                    <Button color="#1C1C1E" bg="#a1aaaa" rounded="md" size="md" asChild _hover={{ transform: 'scale(1.05)', bg: '#ca6164', transition: 'transform 0.2s' }}>
+                    <Button color={colors.text} bg={colors.accentgreen} rounded="md" size="md" asChild _hover={{ transform: 'scale(1.05)', bg: colors.hover, transition: 'transform 0.2s' }}>
                       <a href={ticketUrl} target="_blank" rel="noopener noreferrer">
                         {getString('ticket')} {getIcon('ticket')}
                       </a>
@@ -119,7 +120,7 @@ const PastGigCard = ({id, name, time, city} : Gig) => {
   const dateStr = date.toLocaleString('de-DE', dateOpt);
 
   return (
-     <Container key={id} minH="3rem" maxW="50rem" outline="2px solid" outlineColor="#1C1C1E" borderRadius="0.75rem" overflow="hidden" bg="#eaeaea">
+     <Container key={id} minH="3rem" maxW="50rem" borderWidth="2px" borderColor={colors.text}  borderRadius="0.75rem" overflow="hidden" bg={colors.accentwhite}>
       <Box h="100%" p="0.75rem" w={{base: "100%", md: "100%"}} display="flex" justifyContent="center">
         <VStack align="start" gap="1rem" h="100%">
           <Flex w="100%" gap="0.5rem" direction={{ base: "column", md: "row" }} justify="center">
