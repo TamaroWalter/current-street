@@ -1,59 +1,85 @@
 import type { IconButtonProps } from "@chakra-ui/react"
-import { AspectRatio, Box, Carousel, Container, IconButton, Image, Blockquote } from "@chakra-ui/react"
+import { Flex, Stack, AspectRatio, Box, Carousel, Container, IconButton, Image, Text, Card } from "@chakra-ui/react"
 import { forwardRef } from "react"
-import { getIcon} from '../core/lib';
+import { getIcon } from '../core/lib';
+import { colors } from "../core/theme";
 import { useTranslation } from '../core/LanguageContext';
 import photos from "../data/photos.json";
-
+import members from "../data/members.json";
 
 export default function About() {
+  const { getString } = useTranslation();
   return (
-    <Container minH="30rem" h="100%" w="100%">
-      <SlideShow/>
-      <BandDescription/>
+    <Container>
+      <Flex align="left">
+        <Text fontSize="3xl" fontWeight="bold">{getString("the_band")}</Text>
+      </Flex>
+      <Stack direction="column" gap="8">
+        <Stack direction={{ base: "column", md: "row" }}>
+          <SlideShow/>
+          <BandDescription/>
+        </Stack>
+        <Stack
+          direction={{ base: "column", md: "row" }}
+          justify={{ base: "stretch", md: "flex-start" }}
+          overflowX={{ base: "visible", md: "auto" }}
+          overflowY="hidden"
+          flexWrap="nowrap"
+        >
+          {
+            members.map((member) => (
+              <MemberCard
+                key={member.id}
+                id={member.id}
+                name={member.name}
+                instruments={member.instruments}
+                desc={member.desc}
+                photo_id={member.photo_id}
+              />
+            )
+          )}
+        </Stack>
+      </Stack>
     </Container>
   );
 }
 
 const SlideShow = () => {
   return (
-     <Carousel.Root
-        slideCount={photos.length}
-        maxW="2xl"
-        mx="auto"
-        gap="4"
-        position="relative"
-        colorPalette="white"
-    >
-        <Carousel.Control gap="4" width="full" position="relative">
+    <Carousel.Root slideCount={photos.length} w="100%" mx="auto">
+      <Carousel.ItemGroup pointerEvents={{ base: "auto", md: "none" }}>
+        {photos.map((photo, index) => (
+          <Carousel.Item key={photo.id} index={index}>
+            <AspectRatio ratio={16 / 9} maxH="60vh" w="full">
+              <Box display="flex" alignItems="center" justifyContent="center">
+                <Image
+                  src={photo.source}
+                  alt={photo.alt}
+                  objectFit="cover"
+                  maxH="100%"
+                  maxW="100%"
+                />
+              </Box>
+            </AspectRatio>
+          </Carousel.Item>
+        ))}
+      </Carousel.ItemGroup>
+
+      <Carousel.Control justifyContent="center" gap="4">
         <Carousel.PrevTrigger asChild>
-            <ActionButton insetStart="4">
-              {getIcon('arrowleft')}
-            </ActionButton>
+          <IconButton size="xs" variant="ghost">
+            {getIcon('arrowleft')}
+          </IconButton>
         </Carousel.PrevTrigger>
 
-        <Carousel.ItemGroup width="full">
-            {photos.map((photo) => (
-             <PhotoImage key={photo.id} id={photo.id} source={photo.source} alt={photo.alt}/>
-            ))}
-        </Carousel.ItemGroup>
+        <Carousel.Indicators />
 
         <Carousel.NextTrigger asChild>
-            <ActionButton insetEnd="4">
-              {getIcon('arrowright')}
-            </ActionButton>
+          <IconButton size="xs" variant="ghost">
+            {getIcon('arrowright')}
+          </IconButton>
         </Carousel.NextTrigger>
-
-        <Box position="absolute" bottom="6" width="full">
-            <Carousel.Indicators
-            transition="width 0.2s ease-in-out"
-            transformOrigin="center"
-            opacity="0.5"
-            boxSize="2"
-            _current={{ width: "10", bg: "colorPalette.subtle", opacity: 1 }}
-            />
-        </Box>
-        </Carousel.Control>
+      </Carousel.Control>
     </Carousel.Root>
   );
 
@@ -62,53 +88,40 @@ const SlideShow = () => {
 const BandDescription = () => {
   const { getString } = useTranslation();
   return (
-    <Blockquote.Root className="background-box" mt="2rem" justify="center">
-      <Blockquote.Content whiteSpace="pre-line">
-        {getString("currentstreet_description")}
-      </Blockquote.Content>
-    </Blockquote.Root>
+    <Text maxW={{base: "100%", md: "50%"}} mx={{base: "10px", md: "2.5rem"}} alignContent="center"bg={colors.accentgreen}>
+      {getString("currentstreet_description")}
+    </Text>
   );
 }
 
-// Single Components.
-const PhotoImage = ({ id, source, alt }: Photo) => {
+const MemberCard = ({id, name, instruments, desc, photo_id} : Member) => {
+  const {getString} = useTranslation();
+  const photo = photos.find(e => e.id == photo_id);
   return (
-    <Carousel.Item key={id} index={id}>
-      <AspectRatio ratio={16 / 9} maxH="72vh" w="full">
-        <Box display="flex" alignItems="center" justifyContent="center">
-          <Image
-            src={source}
-            alt={alt}
-            objectFit="contain"
-            maxH="100%"
-            maxW="100%"
-          />
-        </Box>
-      </AspectRatio>
-    </Carousel.Item>
+    <Card.Root maxH="35rem" minW="xs" maxW="xs" overflow="hidden" flexShrink={0}>
+      <Image
+        src={photo?.source}
+        alt={photo?.alt}
+      />
+      <Card.Body gap="2">
+        <Card.Title>
+          <Text color={colors.text}>
+            {name} - {instruments.map((instrument) => getString(instrument)).join(", ")}
+          </Text>
+        </Card.Title>
+        <Card.Description>
+          <Text color={colors.text}>{desc}</Text>
+        </Card.Description>
+      </Card.Body>
+    </Card.Root>
   )
 }
 
-const ActionButton = forwardRef<HTMLButtonElement, IconButtonProps>(
-  function ActionButton(props, ref) {
-    return (
-      <IconButton
-        {...props}
-        ref={ref}
-        size="xs"
-        variant="outline"
-        rounded="full"
-        position="absolute"
-        zIndex="1"
-        bg="bg"
-      />
-    )
-  },
-)
-
-// Interfaces and Data objects.
-interface Photo {
+interface Member {
   id: number;
-  source: string;
-  alt: string;
+  name: string;
+  instruments: string[];
+  desc: string;
+  photo_id: number;
 }
+

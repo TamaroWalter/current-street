@@ -1,14 +1,18 @@
 
 {
+  "bass": "Bass",
   "calendar": "Kalender",
   "copyright": "Current Street. Alle Rechte vorbehalten.",
-  "currentstreet_description": "Current Street - fünf Musiker, die ihre unterschiedlichen musikalischen Wurzeln zu einem unverwechselbaren Sound vereinen. Alleinstellungsmerkmale der Pop-Rock Formation sind die melodischen Klänge des Saxophons, emotionsgeladener mehrstimmiger Gesang und träumerische Songtexte. Auf der Bühne überzeugt die Band mit Leidenschaft, Energie \nund einer Präsenz, die ihre Songs für alle greifbar und erlebbar macht. Kurz gesagt: - Musik, die verbindet! Drei Singles sind bereits auf allen Streaming-Plattformen zu hören - neue Songs stehen schon in den Startlöchern!",
+  "currentstreet_description": "Current Street - fünf Musiker, die ihre unterschiedlichen musikalischen Wurzeln zu einem unverwechselbaren Sound vereinen. Alleinstellungsmerkmale der Pop-Rock Formation sind die melodischen Klänge des Saxophons, emotionsgeladener mehrstimmiger Gesang und träumerische Songtexte. Auf der Bühne überzeugt die Band mit Leidenschaft, Energie und einer Präsenz, die ihre Songs für alle greifbar und erlebbar macht. Kurz gesagt: - Musik, die verbindet! Drei Singles sind bereits auf allen Streaming-Plattformen zu hören - neue Songs stehen schon in den Startlöchern!",
   "directions": "Route",
+  "drums": "Schlagzeug",
   "googlecalendar": "Google Kalender",
+  "guitar": "Gitarre",
   "header_about": "ÜBER UNS",
   "header_home": "START",
   "header_live": "AUFTRITTE",
   "hour": "{0} Uhr",
+  "keyboard": "Keyboard",
   "lang_toggle": "EN",
   "menu": "Menü",
   "new_single": "Hör in die neue Single rein!",
@@ -16,8 +20,11 @@
   "outlook": "Outlook",
   "past_gigs": "Letzte Auftritte:",
   "saveics": "ICS herunterladen",
+  "saxophone": "Saxophon",
   "social_media": "Entdecke uns auf allen Plattformen:",
+  "the_band": "Die Band:",
   "title": "Current Street",
   "ticket": "Karten",
-  "upcoming_gigs": "Nächste Auftritte:"
+  "upcoming_gigs": "Nächste Auftritte:",
+  "voice": "Sänger"
 }

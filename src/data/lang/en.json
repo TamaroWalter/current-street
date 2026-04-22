@@ -1,13 +1,17 @@
 {
+  "bass": "Bass",
   "calendar": "Calendar",
   "copyright": "Current Street. All rights reserved.",
-  "currentstreet_description": "Current Street - fünf Musiker, die ihre unterschiedlichen musikalischen Wurzeln zu einem unverwechselbaren Sound vereinen. Alleinstellungsmerkmale der Pop-Rock Formation sind die melodischen Klänge des Saxophons, emotionsgeladener mehrstimmiger Gesang und träumerische Songtexte. Auf der Bühne überzeugt die Band mit Leidenschaft, Energie \nund einer Präsenz, die ihre Songs für alle greifbar und erlebbar macht. Kurz gesagt: - Musik, die verbindet! Drei Singles sind bereits auf allen Streaming-Plattformen zu hören - neue Songs stehen schon in den Startlöchern!",
+  "currentstreet_description": "Current Street - fünf Musiker, die ihre unterschiedlichen musikalischen Wurzeln zu einem unverwechselbaren Sound vereinen. Alleinstellungsmerkmale der Pop-Rock Formation sind die melodischen Klänge des Saxophons, emotionsgeladener mehrstimmiger Gesang und träumerische Songtexte. Auf der Bühne überzeugt die Band mit Leidenschaft, Energie und einer Präsenz, die ihre Songs für alle greifbar und erlebbar macht. Kurz gesagt: - Musik, die verbindet! Drei Singles sind bereits auf allen Streaming-Plattformen zu hören - neue Songs stehen schon in den Startlöchern!",
   "directions": "Directions",
+  "drums": "Drums",
   "googlecalendar": "Google Calendar",
+  "guitar": "Guitar",
   "header_about": "ABOUT US",
   "header_home": "HOME",
   "header_live": "LIVE",
   "hour": "at {0}",
+  "keyboard": "Keyboard",
   "lang_toggle": "DE",
   "menu": "Menu",
   "new_single": "Listen to the new single!",
@@ -15,8 +19,11 @@
   "outlook": "Outlook",
   "past_gigs": "Past gigs:",
   "saveics": "Download ICS",
+  "saxophone": "Saxophone",
   "social_media": "Discover us on all platforms:",
+  "the_band": "The Band:",
   "title": "Current Street",
   "ticket": "Tickets",
-  "upcoming_gigs": "Upcoming gigs:"
+  "upcoming_gigs": "Upcoming gigs:",
+  "voice": "Singer"
 }
