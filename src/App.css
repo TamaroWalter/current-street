@@ -94,7 +94,6 @@
   padding-bottom: 0.2rem;
   padding-left: 1rem;
   padding-right: 1rem;
-  margin-top: auto;
 }
 
 .footer-social:hover {
@@ -123,8 +122,8 @@
 @media (min-width: 768px) {
 
   .footer {
-    padding-top: 3rem;
-      padding-bottom: 2rem;
+    padding-top: 0.75rem;
+      padding-bottom: 0.75rem;
   }
 
   .main-content {

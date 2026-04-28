@@ -44,7 +44,7 @@ export default function App() {
 
 function AppHeader() {
   return (
-    <Box as="header" className="header" mt="1rem">
+    <Box as="header" className="header" pt={{ base: "1.2rem", md:"0" }} bg="rgba(50, 70, 65, .4)">
       <Box display={{ base: "flex", md: "none" }}>
         <MobileNav/>
       </Box>
@@ -150,29 +150,27 @@ function AppFooter() {
   const { language, setLanguage } = useLanguage();
   return (
     <Container as="footer" className="footer" display={{base: "none", md: "block"}}>
-      <Stack gap="6">
-        <Stack direction="row" justify="space-between" align="center">
-          <HStack gap="4">
-            {social.map(({ i, href, icon }) => (
-              <ChakraLink className="footer-social" key={i} href={href} colorPalette="gray" target="_blank" rel="noopener noreferrer">
-                <Icon size="lg">{getIcon(icon as keyof typeof iconMap)}</Icon>
-              </ChakraLink>
-            ))}
-          </HStack>
-          <Button
-            display={{ base: "none", md: "block" }}
-            variant="plain"
-            className="footer-togglelang"
-            onClick={() => setLanguage(language === 'en' ? 'de' : 'en')}
-          >
-            {getString("lang_toggle")}
-          </Button>
-        </Stack>
+      <Stack direction="row" justify="space-between" align="center">
+        <HStack gap="4">
+          {social.map(({ i, href, icon }) => (
+            <ChakraLink className="footer-social" key={i} href={href} colorPalette="gray" target="_blank" rel="noopener noreferrer">
+              <Icon size="lg">{getIcon(icon as keyof typeof iconMap)}</Icon>
+            </ChakraLink>
+          ))}
+        </HStack>
         <Flex align="center" justify="center" width="100%">
           <Text className="footer_copyright">
             © {new Date().getFullYear()} {getString("copyright")}
           </Text>
         </Flex>
+        <Button
+          display={{ base: "none", md: "block" }}
+          variant="plain"
+          className="footer-togglelang"
+          onClick={() => setLanguage(language === 'en' ? 'de' : 'en')}
+        >
+          {getString("lang_toggle")}
+        </Button>
       </Stack>
     </Container>
   );
