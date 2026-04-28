@@ -1,9 +1,10 @@
 // Imports from react and UI library.
 import { BrowserRouter, Routes, Route, Link, useLocation, useNavigate} from 'react-router-dom';
-import { Button, Flex, Box, Text,  Container, HStack, Link as ChakraLink, Icon, Stack, Drawer, IconButton, Portal, CloseButton, Spacer, VStack} from '@chakra-ui/react';
+import { Button, Flex, Box, Text,  Container, HStack, Link as ChakraLink, Icon, Stack, Drawer, IconButton, Portal, Spacer, VStack} from '@chakra-ui/react';
 import { useState } from 'react';
 // Import core.
-import { getIcon, iconMap } from './core/lib';
+import { getIcon } from './core/lib';
+import { iconMap, colors } from './core/theme';
 import { useLanguage, useTranslation } from './core/LanguageContext';
 // Import components styling.
 import './App.css';
@@ -43,7 +44,7 @@ export default function App() {
 
 function AppHeader() {
   return (
-    <Box as="header" className="header" mt="1rem">
+    <Box as="header" className="header" pt={{ base: "1.2rem", md:"0" }} bg="rgba(50, 70, 65, .4)">
       <Box display={{ base: "flex", md: "none" }}>
         <MobileNav/>
       </Box>
@@ -70,20 +71,25 @@ function MobileNav() {
         <Portal>
           <Drawer.Backdrop/>
           <Drawer.Positioner>
-            <Drawer.Content bg="#4a6660" color="#f4f4f5"
+            <Drawer.Content bg={colors.bg}
               _closed={{ animationDuration: "0.4s", animationTimingFunction: "ease-in"}}
               _open={{animationDuration: "0.5s",}}
             >
-              <Drawer.Header/>
+              <Drawer.Header mt="0.2rem">
+                <Drawer.Title>
+                  <Text pt="1" color={colors.text} fontWeight="bold" fontSize="2xl">CURRENT STREET</Text>
+                </Drawer.Title>
+              </Drawer.Header>
               <Drawer.Body display="flex" flexDirection="column" h="100%">
                 <VStack pt="2rem">
                   {navigation.map(({route, text}) => (
                     <Button
+                    borderRadius="xl" borderWidth="2px" borderColor={colors.text}
                     w="100%"
                     size="2xl"
-                    _active={{ transform: 'scale(0.95)', opacity: 0.4, bg: '#a1aaaa' }}
-                    _hover={{bg: '#a1aaaa'}}
-                    backgroundColor={(route == location.pathname) ? '#a1aaaa' : '#f4f4f5'}
+                    _active={{ transform: 'scale(0.95)', opacity: 0.4, bg: colors.accentgreen }}
+                    _hover={{bg: colors.accentgreen}}
+                    backgroundColor={(route == location.pathname) ? colors.accentgreen : colors.accentwhite}
                     onClick={() => {
                       setOpen(false);
                       navigate(route);
@@ -93,8 +99,8 @@ function MobileNav() {
                   ))}
                 </VStack>
                 <Spacer/>
-                <VStack bg="#a1aaaa" borderRadius="2xl" borderColor="#1c1c1e" borderWidth="2px">
-                  <Text pt="1.2rem" pb="0.2rem" fontSize="lg" fontWeight="bold" color="#1c1c1e">{getString('social_media')}</Text>
+                <VStack bg={colors.accentgreen} borderRadius="2xl" borderColor={colors.border} borderWidth="2px">
+                  <Text pt="1.2rem" pb="0.2rem" fontSize="lg" fontWeight="bold" color={colors.text}>{getString('social_media')}</Text>
                   <Spacer/>
                   <HStack pt="0.2rem" pb="1.2rem" gap="4" >
                   {social.filter(({icon}) => ['instagram', 'youtube', 'spotify', 'apple'].includes(icon)).map(({ i, href, icon }) => (
@@ -111,7 +117,9 @@ function MobileNav() {
                 </Button>
               </Drawer.Footer>
               <Drawer.CloseTrigger asChild>
-                <CloseButton size="2xl" />
+                <Icon size="2xl" me="1rem" pe="auto" cursor="pointer" mt="1rem" color={colors.text}>
+                  {getIcon('close')}
+                </Icon>
               </Drawer.CloseTrigger>  
             </Drawer.Content>
           </Drawer.Positioner>
@@ -128,7 +136,7 @@ function DesktopNav() {
     <Container className="header-child">
       <Flex gap="2" className="background-box">
         {navigation.map(({route, text}) => (
-          <Button backgroundColor={(route == location.pathname) ? '#a1aaaa' : '#f4f4f5'} asChild>
+          <Button backgroundColor={(route == location.pathname) ? colors.accentgreen : colors.accentwhite} asChild>
             <Link className="navigation-item" to={route} >{getString(text)}</Link>
           </Button>
           ))}
@@ -142,29 +150,27 @@ function AppFooter() {
   const { language, setLanguage } = useLanguage();
   return (
     <Container as="footer" className="footer" display={{base: "none", md: "block"}}>
-      <Stack gap="6">
-        <Stack direction="row" justify="space-between" align="center">
-          <HStack gap="4">
-            {social.map(({ i, href, icon }) => (
-              <ChakraLink className="footer-social" key={i} href={href} colorPalette="gray" target="_blank" rel="noopener noreferrer">
-                <Icon size="lg">{getIcon(icon as keyof typeof iconMap)}</Icon>
-              </ChakraLink>
-            ))}
-          </HStack>
-          <Button
-            display={{ base: "none", md: "block" }}
-            variant="plain"
-            className="footer-togglelang"
-            onClick={() => setLanguage(language === 'en' ? 'de' : 'en')}
-          >
-            {getString("lang_toggle")}
-          </Button>
-        </Stack>
+      <Stack direction="row" justify="space-between" align="center">
+        <HStack gap="4">
+          {social.map(({ i, href, icon }) => (
+            <ChakraLink className="footer-social" key={i} href={href} colorPalette="gray" target="_blank" rel="noopener noreferrer">
+              <Icon size="lg">{getIcon(icon as keyof typeof iconMap)}</Icon>
+            </ChakraLink>
+          ))}
+        </HStack>
         <Flex align="center" justify="center" width="100%">
           <Text className="footer_copyright">
             © {new Date().getFullYear()} {getString("copyright")}
           </Text>
         </Flex>
+        <Button
+          display={{ base: "none", md: "block" }}
+          variant="plain"
+          className="footer-togglelang"
+          onClick={() => setLanguage(language === 'en' ? 'de' : 'en')}
+        >
+          {getString("lang_toggle")}
+        </Button>
       </Stack>
     </Container>
   );
