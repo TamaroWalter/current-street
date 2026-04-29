@@ -1,5 +1,5 @@
-import { Flex, Stack, VStack, Avatar, AspectRatio, Box, Carousel, Container, IconButton, Image, Text, Card } from "@chakra-ui/react"
-import { forwardRef, useState, useEffect } from "react"
+import { Stack, VStack, Avatar, AspectRatio, Box, Carousel, Container, IconButton, Image, Text, Card } from "@chakra-ui/react"
+import { useState, useEffect } from "react"
 import { createPortal } from 'react-dom';
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 import { getIcon } from '../core/lib';
@@ -157,10 +157,8 @@ const PhotoCarousel = ({ isZoomable = false, onImageClick}: PhotoCarouselProps) 
   );
 }
 
-const MemberCard = ({id, name, instruments, desc, photo_id} : Member) => {
+const MemberCard = ({id, name, instruments, desc } : Member) => {
   const {getString} = useTranslation();
-  const photo = photos.find(e => e.id == photo_id);
-
   return (
     <Card.Root key={id} w={{base: "100%", md: "20%"}} h={{base: "20%", md:"100%"}}>
       <Card.Body py="3" gap="4">

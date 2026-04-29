@@ -24,6 +24,7 @@ export const iconMap = {
 
 export const colors = {
   bg: "#4a6660",
+  bg_dark: "#3d5650",
   accentgreen: "#a1aaaa",
   accentwhite: "#f4f4f5",
   hover: "#ca6164",
