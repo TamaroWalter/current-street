@@ -42,9 +42,9 @@ export default function App() {
   );
 }
 
-function AppHeader() {
+const AppHeader = () => {
   return (
-    <Box as="header" className="header" pt={{ base: "1.2rem", md:"0" }} bg="rgba(50, 70, 65, .4)">
+    <Box as="header" className="header" pt={{ base: "1.2rem", md:"0" }} bg={colors.bg_dark_lighter}>
       <Box display={{ base: "flex", md: "none" }}>
         <MobileNav/>
       </Box>
@@ -55,7 +55,7 @@ function AppHeader() {
   );
 }
 
-function MobileNav() {
+const MobileNav = () => {
   const { language, setLanguage } = useLanguage();
   const { getString } = useTranslation();
   const location = useLocation();
@@ -63,7 +63,9 @@ function MobileNav() {
   const navigate = useNavigate();
   return (
     <HStack h="100%" w="100%" justifyContent="space-between">
-      <Text pt="1" fontWeight="bold" fontSize="2xl" h="100%">CURRENT STREET</Text>
+      <Text textTransform="uppercase" pt="1" fontWeight="bold" fontSize="2xl" h="100%">
+        {getString("band_name")}
+      </Text>
       <Drawer.Root open={open} onOpenChange={(e) => setOpen(e.open)} placement="top" size="full">
         <Drawer.Trigger asChild>
           <IconButton> {getIcon('menu')} </IconButton>
@@ -129,7 +131,7 @@ function MobileNav() {
   );
 }
 
-function DesktopNav() {
+const DesktopNav = () => {
   const { getString } = useTranslation();
   const location = useLocation();
   return (
@@ -145,7 +147,7 @@ function DesktopNav() {
   );
 }
 
-function AppFooter() {
+const AppFooter = () => {
   const { getString } = useTranslation(); 
   const { language, setLanguage } = useLanguage();
   return (

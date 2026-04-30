@@ -1,0 +1,52 @@
+[
+  {
+    "id": 0,
+    "type": "single",
+    "name": "World Full of Stars",
+    "cover": "/pix/cover/world_full_of_stars.jpeg",
+    "release": 1706832000,
+    "spotify": "https://open.spotify.com/track/0V1Ugi7BtmMNyrfUQubTQ4?si=3c564cb558834b33",
+    "apple": "https://music.apple.com/de/song/world-full-of-stars/1727419290",
+    "youtube": "https://youtu.be/tS9s-_yFvsQ?si=v4D2PAcqQG7F6LpC"
+  },
+  {
+    "id": 1,
+    "type": "single",
+    "name": "Don't Be Sad",
+    "cover": "/pix/cover/dont_be_sad.jpeg",
+    "release": 1725667200,
+    "spotify": "https://open.spotify.com/track/78I0dra7EZqDNlcxqphsqa?si=aee3f862a43f4c14",
+    "apple": "https://music.apple.com/de/song/dont-be-sad/1767809044",
+    "youtube": "https://youtu.be/ydvNkl3h_yk?si=ooks1lcHAFRZO5Am"
+  },
+  {
+    "id": 2,
+    "type": "single",
+    "name": "Reality Check",
+    "cover": "/pix/cover/reality_check.jpeg",
+    "release": 1752796800,
+    "spotify": "https://open.spotify.com/track/73dkRW3bc3lDCM60mwnV5N?si=bab81ed2b28b4da0",
+    "apple": "https://music.apple.com/de/song/reality-check/1820759699",
+    "youtube": "https://youtu.be/BYaMWuwjgpY?si=F-XsaxMMxgfVGYIt"
+  },
+  {
+    "id": 3,
+    "type": "single",
+    "name": "All Alone",
+    "cover": "/pix/cover/all_alone.jpeg",
+    "release": 1766102400,
+    "spotify": "https://open.spotify.com/track/2F7PrZZYQtccqkDJASGpAH?si=49c766a3e596446b",
+    "apple": "https://music.apple.com/de/song/all-alone/1855233829",
+    "youtube": "https://youtu.be/vAIwYvP3KxE?si=tkDO9x2s_ctPwFMX"
+  },
+  {
+    "id": 4,
+    "type": "single",
+    "name": "City Lights",
+    "cover": "/pix/cover/city_lights.jpg",
+    "release": 1770336000,
+    "spotify": "https://open.spotify.com/track/4kgywcyFcOL0BkFFXZl2Hx?si=61915f058b9742c1",
+    "apple": "https://music.apple.com/de/song/city-lights/1868317416",
+    "youtube": "https://youtu.be/Q3m1oUCa19U?si=07eDcMSapmh_Cmkg"
+  }
+]

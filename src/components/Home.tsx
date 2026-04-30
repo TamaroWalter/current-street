@@ -1,72 +1,64 @@
 import {Link} from 'react-router-dom';
-import { Box, Stack, Card, Image, Icon, Link as ChakraLink, Button, Container, VStack, HStack, Text, Spacer} from "@chakra-ui/react";
+import { Box, Stack, Card, Image, Icon, Link as ChakraLink, Button, Container, VStack, HStack, Text, Spacer, Flex} from "@chakra-ui/react";
 import { useTranslation } from '../core/LanguageContext';
 import { getIcon } from '../core/lib';
 import { colors } from "../core/theme";
-import photos from "../data/photos.json";
 import socials from "../data/social.json";
 import gigs from "../data/gigs.json";
+import records from "../data/records.json";
 
 export default function Home() {
-  const { getString } = useTranslation();
-  const spotify = socials.find(social => social.icon == "spotify")!;
   return (
     <Container>
       <VStack gap="5">
-        {/** Main Hero */}
-        <Card.Root w="100%" borderRadius="2xl" borderColor={colors.bg_dark} bg={colors.bg_dark} pt={{ base: "1rem", md: "3rem" }} pb="1rem">
-          <Card.Body gap="2">
-            <Card.Description display="flex" justifyContent="center" alignContent="center">
-              <VStack align="center">
-                <Text fontSize="6xl" fontWeight="medium" color={colors.accentwhite} textAlign="center">
-                  {getString("title")}
-                </Text>
-                <Text fontSize="md" color={colors.accentwhite} textAlign="center">
-                  {getString("hero_desc")}
-                </Text>
-                <HStack pt="2rem">
-                  <Button bg={colors.hover} variant="solid" asChild>
-                    <Link className="navigation-item" to={spotify.href}>
-                      <HStack color={colors.accentwhite}>
-                        {getIcon('spotify')}
-                        <Text>{getString("hero_music")}</Text>
-                      </HStack>
-                    </Link>
-                  </Button>
-                  <Button variant="outline">
-                      <Link className="navigation-item" to="/live"><Text color={colors.accentwhite}>{getString("hero_live")}</Text></Link>
-                  </Button>
-                </HStack>
-              </VStack>
-            </Card.Description>
-          </Card.Body>
-        </Card.Root>
-
+        <Hero/>        
 
         {/** Next concert and current Single */}
         <Stack direction={{base: "column", md:"row"}} w="100%">
           <NextGig/>
           <Spacer/>
-          {/** 
-          <Card.Root borderRadius="2xl" w={{base: "100%", md:"50%"}}>
-            <Card.Body gap="2">
-              <Text fontSize="xs" textTransform="uppercase" letterSpacing="wider" color={colors.accentgreen} mb="3">
-                Newest Single
-              </Text>
-            </Card.Body>
-          </Card.Root> */} 
+          <LatestSingle/>
         </Stack>
-        {/** Booking
-        <Card.Root w="100%" borderRadius="2xl">
-          <Card.Body gap="2">
-            <Card.Title>{getString("the_band")}</Card.Title>
-            <Card.Description>
-              Booking
-            </Card.Description>
-          </Card.Body>
-        </Card.Root> */}
+        <Spacer/>
+
+        {/** Booking */}
+        <Booking/>
       </VStack>
     </Container>
+  );
+}
+
+const Hero = () => {
+  const { getString } = useTranslation();
+  const spotify = socials.find(social => social.icon == "spotify")!;
+  return (
+    <Card.Root w="100%" borderRadius="2xl" borderColor={colors.bg_dark} bg={colors.bg_dark_lighter} pt={{ base: "1rem", md: "3rem" }} pb="1rem">
+      <Card.Body gap="2">
+        <Card.Description display="flex" justifyContent="center" alignContent="center">
+          <VStack align="center">
+            <Text fontSize="6xl" fontWeight="medium" color={colors.accentwhite} textAlign="center">
+              {getString("band_name")}
+            </Text>
+            <Text fontSize="md" color={colors.accentwhite} textAlign="center">
+              {getString("hero_desc")}
+            </Text>
+            <HStack pt="2rem">
+              <Button bg={colors.hover} variant="solid" asChild>
+                <Link className="navigation-item" to={spotify.href}>
+                  <HStack color={colors.accentwhite}>
+                    {getIcon('spotify')}
+                    <Text>{getString("hero_music")}</Text>
+                  </HStack>
+                </Link>
+              </Button>
+              <Button variant="outline">
+                  <Link className="navigation-item" to="/live"><Text color={colors.accentwhite}>{getString("hero_live")}</Text></Link>
+              </Button>
+            </HStack>
+          </VStack>
+        </Card.Description>
+      </Card.Body>
+    </Card.Root>
   );
 }
 
@@ -80,7 +72,7 @@ const NextGig = () => {
   const year = time.toLocaleString(getTimeFormat(), { timeZone: 'Europe/Berlin', year: 'numeric'});
   const mapsQuery = `${nextGig.adress}, ${nextGig.city}, ${nextGig.location}`;
   return (
-    <Card.Root borderRadius="xl" w={{base: "100%", md:"100%"}}> {/** Change md to 50 later when the second one is there */}
+    <Card.Root borderRadius="xl" w={{base: "100%", md:"50%"}}>
       <Card.Body>
         <Text fontSize="xs" textTransform="uppercase" letterSpacing="wider" color={colors.accentgreen} mb="3">
           {getString('upcoming_gig')}
@@ -116,25 +108,60 @@ const NextGig = () => {
     </Card.Root>
   );
 }
-const OldHome = () => {
-  const { getString } = useTranslation();
-  const photo = photos.find(gig => gig.name == "city_light_cover");
-  return (
-      <Stack w="100%" display="flex" justify="center" align="center">
-        <ChakraLink className="footer-social"
-                    href={"https://open.spotify.com/album/0m7NLH39VIxdKQu7b9Qor8?si=leUWrvx5RiSf9U-ZU-FQAg"}
-                    colorPalette="gray"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    _hover={{ textDecoration: "none" }}>
-          <Card.Root width={{base:"24rem", md:"30rem"}} border="none" background="none">
-            <Card.Body gap="2">
 
-              <Card.Title textAlign="center">{getString("new_single")}</Card.Title>
-              <Image src={photo?.source} alt={photo?.alt}/>
-            </Card.Body>
-          </Card.Root>
-        </ChakraLink>
-      </Stack>
+const LatestSingle = () => {
+  const { getString } = useTranslation();
+  const single = records.sort((a,b) => b.release - a.release )[0];
+  
+  return (
+    <Card.Root borderRadius="xl" w={{base: "100%", md:"50%"}}>
+      <Card.Body>
+        <Text fontSize="xs" textTransform="uppercase" letterSpacing="wider" color={colors.accentgreen} mb="3">
+          {getString("latest_single")}
+        </Text>
+        <HStack align="flex-start" gap="3">
+          <Box textAlign="center" bg={colors.hover} color={colors.accentwhite} borderRadius="lg" minW="6rem">
+            <Image borderRadius="lg" maxW="6rem" src={single.cover} alt="John Doe"/>
+          </Box>
+          <Box w="100%">
+            <Text fontWeight="medium">{single.name}</Text>
+            <Flex direction={{base: "column", md: "row"}} wrap="wrap" align={{base: "stretch", md: "flex-start"}} mt="3" px={{base:"0.5rem" , md: "0rem"}} gap="2">
+              <Button size="xs" variant="outline" flex={{md: "1"}} minW={{md: "fit-content"}} asChild>
+                <a href={single.spotify} target="_blank" rel="noopener noreferrer">
+                  {getIcon('spotify')} Spotify
+                </a>
+              </Button>
+              <Button size="xs" variant="outline" flex={{md: "1"}} minW={{md: "fit-content"}} asChild>
+                <a href={single.apple} target="_blank" rel="noopener noreferrer">
+                  {getIcon('apple')} Apple Music
+                </a>
+              </Button>
+              <Button size="xs" variant="outline" flex={{md: "1"}} minW={{md: "fit-content"}} asChild>
+                <a href={single.youtube} target="_blank" rel="noopener noreferrer">
+                  {getIcon('youtube')} Youtube
+                </a>
+              </Button>
+            </Flex>
+          </Box>
+        </HStack>
+      </Card.Body>
+    </Card.Root>
+  );
+}
+
+const Booking = () => {
+  const { getString } = useTranslation();
+  const email = socials.find(social => social.icon == "gmail")!;
+  return (
+    <Flex minH="3rem" w="100%" bg={colors.bg_dark} border="1px dashed" borderColor={colors.accentgreen} borderRadius="lg" px="3" py="2.5" justify="start" align="center" gap="2">
+      <Text fontSize="xs"color={colors.accentwhite}>
+        {getString("contact_us")}
+      </Text>
+      <ChakraLink href={email.href} colorPalette="gray" target="_blank" rel="noopener noreferrer">
+        <Text fontSize="xs" color={colors.hover}>
+          {getString('email')}
+        </Text>
+      </ChakraLink>
+    </Flex>
   );
 }
