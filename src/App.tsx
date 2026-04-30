@@ -28,7 +28,7 @@ export default function App() {
       <Box className="app-container">
         <AppHeader/>
           <Box className="main-scroll">
-            <Box as="main" className="main-content">
+            <Box as="main" minH="100%" h="100%" p="1rem">
               <Routes>
                 <Route path="/" element={<Home/>} />
                 <Route path="/about" element={<About/>} />
@@ -44,7 +44,7 @@ export default function App() {
 
 const AppHeader = () => {
   return (
-    <Box as="header" className="header" pt={{ base: "1.2rem", md:"0" }} bg={colors.bg_dark_lighter}>
+    <Box as="header" px="0.75rem" py="0.66rem" bg={colors.bg_dark_lighter}>
       <Box display={{ base: "flex", md: "none" }}>
         <MobileNav/>
       </Box>
@@ -89,7 +89,6 @@ const MobileNav = () => {
                     borderRadius="xl" borderWidth="2px" borderColor={colors.text}
                     w="100%"
                     size="2xl"
-                    _active={{ transform: 'scale(0.95)', opacity: 0.4, bg: colors.accentgreen }}
                     _hover={{bg: colors.accentgreen}}
                     backgroundColor={(route == location.pathname) ? colors.accentgreen : colors.accentwhite}
                     onClick={() => {
@@ -136,12 +135,25 @@ const DesktopNav = () => {
   const location = useLocation();
   return (
     <Container className="header-child">
-      <Flex gap="2" className="background-box">
-        {navigation.map(({route, text}) => (
-          <Button backgroundColor={(route == location.pathname) ? colors.accentgreen : colors.accentwhite} asChild>
-            <Link className="navigation-item" to={route} >{getString(text)}</Link>
-          </Button>
-          ))}
+      <Flex align="center" w="100%">
+        <Box bg={colors.bg_dark} borderRadius="xl" p="1" border="1px solid" borderColor={colors.accentgreen}>
+          <HStack gap="1">
+            {navigation.map(({ route, text }) => (
+              <Button
+                key={route}
+                borderRadius="lg"
+                size="sm"
+                variant="ghost"
+                _hover={{ bg: colors.accentgreen, color: colors.text }}
+                bg={route === location.pathname ? colors.accentgreen : "transparent"}
+                color={route === location.pathname ? colors.text : colors.accentwhite}
+                asChild
+              >
+                <Link className="navigation-item" to={route}>{getString(text)}</Link>
+              </Button>
+            ))}
+          </HStack>
+        </Box>
       </Flex>
     </Container>
   );

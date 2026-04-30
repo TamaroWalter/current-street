@@ -9,8 +9,8 @@ import records from "../data/records.json";
 
 export default function Home() {
   return (
-    <Container>
-      <VStack gap="5">
+    <Container minH="100%" h="100%">
+      <VStack gap="5" w="100%" minH="100%" h="100%">
         <Hero/>        
 
         {/** Next concert and current Single */}
@@ -20,7 +20,6 @@ export default function Home() {
           <LatestSingle/>
         </Stack>
         <Spacer/>
-
         {/** Booking */}
         <Booking/>
       </VStack>
