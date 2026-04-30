@@ -11,7 +11,7 @@ import members from "../data/members.json";
 export default function About() {
   const { getString } = useTranslation();
   return (
-    <Container>
+    <Container pb="1rem">
       <VStack gap="5">
         {/** Story card*/}
         <Card.Root w="100%" borderRadius="2xl">
