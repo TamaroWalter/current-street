@@ -1,5 +1,6 @@
 
 {
+  "all_gigs": "Alle Termine",
   "bass": "Bass",
   "calendar": "Kalender",
   "copyright": "Current Street. Alle Rechte vorbehalten.",
@@ -14,7 +15,7 @@
   "header_live": "AUFTRITTE",
   "hero_desc": "Indie-Pop aus Münster",
   "hero_live": "Auftritte",
-  "hero_music": "Hör rein",
+  "hero_music": "Hör rein!",
   "hour": "{0} Uhr",
   "keyboard": "Keyboard",
   "lang_toggle": "EN",
@@ -30,6 +31,7 @@
   "the_band": "Die Band:",
   "title": "Current Street",
   "ticket": "Karten",
+  "upcoming_gig": "Nächster Auftritt",
   "upcoming_gigs": "Nächste Auftritte:",
   "voice": "Sänger"
 }

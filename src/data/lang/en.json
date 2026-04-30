@@ -1,4 +1,5 @@
 {
+  "all_gigs": "All Gigs",
   "bass": "Bass",
   "calendar": "Calendar",
   "copyright": "Current Street. All rights reserved.",
@@ -13,7 +14,7 @@
   "header_live": "LIVE",
   "hero_desc": "Indie-Pop from Münster",
   "hero_live": "Gigs",
-  "hero_music": "Listen now",
+  "hero_music": "Listen now!",
   "hour": "at {0}",
   "keyboard": "Keyboard",
   "lang_toggle": "DE",
@@ -29,6 +30,7 @@
   "the_band": "The Band:",
   "title": "Current Street",
   "ticket": "Tickets",
+  "upcoming_gig": "Upcoming gig",
   "upcoming_gigs": "Upcoming gigs:",
   "voice": "Singer"
 }
