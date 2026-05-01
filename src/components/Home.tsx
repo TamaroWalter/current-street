@@ -1,5 +1,5 @@
 import {Link} from 'react-router-dom';
-import { Box, Stack, Card, Image, Icon, Link as ChakraLink, Button, Container, VStack, HStack, Text, Spacer, Flex} from "@chakra-ui/react";
+import { Box, Stack, Card, Image, Link as ChakraLink, Button, Container, VStack, HStack, Text, Spacer, Flex} from "@chakra-ui/react";
 import { useTranslation } from '../core/LanguageContext';
 import { getIcon } from '../core/lib';
 import { colors } from "../core/theme";
@@ -11,7 +11,7 @@ export default function Home() {
   return (
     <Container minH="100%" h="100%">
       <VStack gap="5" w="100%" minH="100%" h="100%">
-        <Hero/>        
+        <Hero/>
 
         {/** Next concert and current Single */}
         <Stack direction={{base: "column", md:"row"}} w="100%">
@@ -41,19 +41,11 @@ const Hero = () => {
             <Text fontSize="md" color={colors.accentwhite} textAlign="center">
               {getString("hero_desc")}
             </Text>
-            <HStack pt="2rem">
-              <Button bg={colors.hover} variant="solid" asChild>
-                <Link className="navigation-item" to={spotify.href}>
-                  <HStack color={colors.accentwhite}>
-                    {getIcon('spotify')}
-                    <Text>{getString("hero_music")}</Text>
-                  </HStack>
-                </Link>
-              </Button>
-              <Button variant="outline">
-                  <Link className="navigation-item" to="/live"><Text color={colors.accentwhite}>{getString("hero_live")}</Text></Link>
-              </Button>
-            </HStack>
+            <Button mt="2rem" bg={colors.hover} variant="solid" asChild>
+              <ChakraLink href={spotify.href}>
+                {getIcon('spotify')} <Text>{getString("hero_music")}</Text>
+              </ChakraLink>
+            </Button>
           </VStack>
         </Card.Description>
       </Card.Body>
@@ -65,7 +57,7 @@ const NextGig = () => {
   const { getString, getTimeFormat } = useTranslation();
   const nextGig = gigs.filter(gig => gig.time > (Date.now() / 1000)).sort((a,b) => a.time - b.time)[0];
   const time = new Date(nextGig.time * 1000);
-  const timeStr = time.toLocaleString(getTimeFormat(), { timeZone: 'Europe/Berlin', hour: '2-digit', minute: '2-digit' });  
+  const timeStr = time.toLocaleString(getTimeFormat(), { timeZone: 'Europe/Berlin', hour: '2-digit', minute: '2-digit' });
   const day = time.toLocaleString(getTimeFormat(), { timeZone: 'Europe/Berlin', day: '2-digit'});
   const month = time.toLocaleString(getTimeFormat(), { timeZone: 'Europe/Berlin', month: 'short'});
   const year = time.toLocaleString(getTimeFormat(), { timeZone: 'Europe/Berlin', year: 'numeric'});
@@ -73,7 +65,7 @@ const NextGig = () => {
   return (
     <Card.Root borderRadius="xl" w={{base: "100%", md:"50%"}}>
       <Card.Body>
-        <Text fontSize="xs" textTransform="uppercase" letterSpacing="wider" color={colors.accentgreen} mb="3">
+        <Text fontSize="xs" textTransform="uppercase" letterSpacing="wider" color={colors.gray} mb="3">
           {getString('upcoming_gig')}
         </Text>
         <HStack align="flex-start" gap="3">
@@ -84,7 +76,7 @@ const NextGig = () => {
           </Box>
           <Box>
             <Text fontWeight="medium">{nextGig.name}</Text>
-            <Text fontSize="sm" color={colors.accentgreen}>{nextGig.city} - {getString('hour', timeStr)}</Text>
+            <Text fontSize="sm" color={colors.gray}>{nextGig.city} - {getString('hour', timeStr)}</Text>
             <HStack mt="3" gap="2">
               <Button size="xs" bg={colors.bg} color={colors.accentwhite} asChild>
                 {nextGig.ticketUrl && nextGig.ticketUrl.trim() ? (
@@ -111,11 +103,11 @@ const NextGig = () => {
 const LatestSingle = () => {
   const { getString } = useTranslation();
   const single = records.sort((a,b) => b.release - a.release )[0];
-  
+
   return (
     <Card.Root borderRadius="xl" w={{base: "100%", md:"50%"}}>
       <Card.Body>
-        <Text fontSize="xs" textTransform="uppercase" letterSpacing="wider" color={colors.accentgreen} mb="3">
+        <Text fontSize="xs" textTransform="uppercase" letterSpacing="wider" color={colors.gray} mb="3">
           {getString("latest_single")}
         </Text>
         <HStack align="flex-start" gap="3">
@@ -152,7 +144,7 @@ const Booking = () => {
   const { getString } = useTranslation();
   const email = socials.find(social => social.icon == "gmail")!;
   return (
-    <Flex minH="3rem" w="100%" bg={colors.bg_dark} border="1px dashed" borderColor={colors.accentgreen} borderRadius="lg" px="3" py="2.5" justify="start" align="center" gap="2">
+    <Flex minH="3rem" w="100%" bg={colors.bg_dark} border="1px dashed" borderColor={colors.gray} borderRadius="lg" px="3" py="2.5" justify="start" align="center" gap="2">
       <Text fontSize="xs"color={colors.accentwhite}>
         {getString("contact_us")}
       </Text>

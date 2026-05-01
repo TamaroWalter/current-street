@@ -32,7 +32,7 @@ export function useTranslation() {
    * Method to get a String independent of the language.
    * @param identifier
    * @param params accepts multiple parameters
-   * @returns 
+   * @returns
   */
   function getString(identifier: string, ...params: string[]): string {
     let str = dict[identifier] ?? "";
@@ -41,7 +41,7 @@ export function useTranslation() {
   }
 
   function getTimeFormat() {
-    return language === 'de' ? 'de-De' : 'en-GB';
+    return language === 'de' ? 'de-De' : 'en-US';
   }
 
   return { getString, getTimeFormat };

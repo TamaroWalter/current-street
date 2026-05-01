@@ -1,8 +1,9 @@
-import {Container, Button, Text, Flex, Menu, Stack, VStack, Box, Collapsible, Portal} from "@chakra-ui/react";
+import { useState } from "react";
+import {Box, Button, Collapsible, Container, Flex, Menu, Portal, Stack, Table, Tabs, Text } from "@chakra-ui/react";
 import { getIcon } from "../core/lib";
-import { colors } from "../core/theme";
 import { getCalendarUrl, type CalendarAction } from "../core/calendar";
-import { useTranslation } from '../core/LanguageContext';
+import { useTranslation } from "../core/LanguageContext";
+import { colors } from "../core/theme";
 import gigs from "../data/gigs.json";
 
 interface Gig {
@@ -16,186 +17,163 @@ interface Gig {
   ticketUrl?: string;
 }
 
-const GigCard = ({id, name, time, city, adress, location, description, ticketUrl}: Gig) => {
+const GigRow = ({ gig, isPast }: { gig: Gig; isPast: boolean }) => {
   const { getString, getTimeFormat } = useTranslation();
-  // Get the date and time from the timestamp with seconds time.
-  const date = new Date(time * 1000);
-  const dateStr = date.toLocaleString(getTimeFormat(), { timeZone: 'Europe/Berlin', year: 'numeric', month: '2-digit', day: '2-digit'});
-  const timeStr = date.toLocaleString(getTimeFormat(), { timeZone: 'Europe/Berlin', hour: '2-digit', minute: '2-digit' });
-  const mapsQuery = `${adress}, ${city}, ${location}`;
-  const calendarlocation = adress + ', ' + city;
+  const [open, setOpen] = useState(false);
+
+  const date = new Date(gig.time * 1000);
+  const dateStr = date.toLocaleDateString(getTimeFormat(), {
+    timeZone: "Europe/Berlin",
+    year: "numeric",
+    month: "short",
+    day: "2-digit",
+  });
+  const timeStr = date.toLocaleTimeString(getTimeFormat(), {
+    timeZone: "Europe/Berlin",
+    hour: "2-digit",
+    minute: "2-digit",
+  });
+
+  const hasDetails = Boolean(gig.description || gig.adress) && !isPast;
+  const mapsQuery = `${gig.adress}, ${gig.city}, ${gig.location}`;
+  const calendarLocation = `${gig.adress}, ${gig.city}`;
 
   const handleAddToCalendar = (action: CalendarAction) => {
-    const result = getCalendarUrl(action, name, time, calendarlocation, description, ticketUrl);
-    
-    if (action === 'ics') {
-      const link = document.createElement('a');
+    const result = getCalendarUrl(action, gig.name, gig.time, calendarLocation, gig.description, gig.ticketUrl);
+    if (action === "ics") {
+      const link = document.createElement("a");
       link.href = URL.createObjectURL(result as Blob);
-      link.download = `CurrentStreet-${name}.ics`;
+      link.download = `CurrentStreet-${gig.name}.ics`;
       link.click();
       URL.revokeObjectURL(link.href);
     } else {
-      window.open(result as string, '_blank');
+      window.open(result as string, "_blank");
     }
   };
 
   return (
-    <Collapsible.Root>
-      <Container key={id} minH="3rem" w="100%" maxW={{ base: "100%", md: "50rem" }} borderWidth="2px" borderColor={colors.text} borderRadius="0.75rem" overflow="hidden" bg={colors.accentwhite}>
-        <Box pt="3" display="flex" w="100%" justifyContent="space-between">
-          <Flex w="100%" gap="0.5rem" direction={{ base: "column", md: "row" }} align={{ base: "start", md: "center" }}>
-            <Text fontSize="2xl" fontWeight="bold">{dateStr}</Text>
-            <Text fontSize="2xl" fontWeight="bold">{name}</Text>
-          </Flex>
-          <Collapsible.Trigger alignSelf="flex-start" display="flex" gap="2" alignItems="center">
-              <Collapsible.Indicator transition="transform 0.2s" _open={{ transform: "rotate(180deg)" }}>
-                <Box fontSize="1.75rem" lineHeight="1">
-                  {getIcon("chevrondown")}
-                </Box>
-              </Collapsible.Indicator>
-            </Collapsible.Trigger>
-        </Box>
-        <Stack direction={{ base: "column", md: "row" }} align="stretch">
-          <Box h="100%" p="0.75rem" display="flex" flexDirection="column" w={{base: "100%", md: "70%"}} justifyContent="center">
-              <Box w="100%">
-                <Collapsible.Content>
-                  <Text whiteSpace="pre-line"> {description} </Text>
-                </Collapsible.Content>
-              </Box>
-          </Box>
-          <Flex p="0.75rem" pt="0" w={{base: "100%", md: "30%"}} alignSelf={{base:"center", md:"flex-start"}} align="center" justify={{ base: "center", md: "flex-end" }}>
-            <VStack>
-              <Button color={colors.text} bg={colors.accentgreen} rounded="md" size="md" w="100%" asChild _hover={{ transform: 'scale(1.05)', bg: colors.hover, transition: 'transform 0.2s' }}>
-                <a href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(mapsQuery)}`} target="_blank" rel="noopener noreferrer">
-                  {getString("directions")} {getIcon('googlemaps')}
-                </a>
-              </Button>
-              <Collapsible.Content w="100%">
-                <Stack direction={{ base: "row", md: "column" }}>
-                  <Menu.Root>
-                    <Menu.Trigger asChild>
-                      <Button color={colors.text} bg={colors.accentgreen} rounded="md" size="md" _hover={{ transform: 'scale(1.05)', bg: colors.hover, transition: 'transform 0.2s' }}>
-                        {getString('calendar')} {getIcon('calendarsave')}
+      <>
+        {/* Row Header */}
+        <Table.Row cursor={hasDetails ? "pointer" : "default"}
+                   onClick={() => hasDetails && setOpen((o) => !o)}
+                   _hover={{bg: colors.accentwhite_selected}}
+                   bg={colors.accentwhite}
+                   transition="background 0.15s"
+                   w="100%"
+        >
+          <Table.Cell fontWeight="semibold" w={{ base: "40%", md: "25%" }}> {dateStr} </Table.Cell>
+          <Table.Cell fontWeight="semibold" w={{ base: "45%", md: "50%" }}> {gig.name} </Table.Cell>
+          <Table.Cell display={{ base: "none", md: "table-cell" }} w={{ base: "0%", md: "20%" }}>{gig.city}</Table.Cell>
+          <Table.Cell display={hasDetails ? "table-cell" : "none"} w={{ base: "15%", md: "5%" }}>
+            <Box display="inline-flex" fontSize="1.25rem" transform={open ? "rotate(180deg)" : "rotate(0deg)"} transition="transform 0.2s">
+              {getIcon("chevrondown")}
+            </Box>
+          </Table.Cell>
+        </Table.Row>
+
+        {/* Gig detail information. Is a row too so it fits in the table design */}
+        <Table.Row display={hasDetails ? "table-row" : "none"} bg={colors.accentwhite}>
+          <Table.Cell colSpan={4} p="0" borderBottomWidth={open ? "1px" : "0"} borderBottomColor={colors.border} borderTop="none">
+            <Collapsible.Root open={open}>
+              <Collapsible.Content>
+                <Box p="1rem 1.25rem" bg={colors.accentwhite}>
+                  <Stack gap="3">
+                    <Text whiteSpace="pre-line" fontSize="md">{gig.description}</Text>
+
+                    {/* Action buttons */}
+                    <Flex wrap="wrap" gap="2">
+                      <Button size="sm" bg={colors.accentgreen} color={colors.text} _hover={{ bg: colors.hover }} asChild>
+                        <a href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(mapsQuery)}`}
+                           target="_blank" rel="noopener noreferrer">
+                          {getString("directions")} {getIcon("googlemaps")}
+                        </a>
                       </Button>
-                    </Menu.Trigger>
-                    <Portal>
-                      <Menu.Positioner>
-                        <Menu.Content minW={{base: "0", md: "15rem"}} minH={{base: "0", md: "7rem"}}>
-                          <Menu.Item value="google" fontSize="md" p="0.75rem 1rem" onClick={() => handleAddToCalendar('google')}>
-                            {getIcon('googlecalendar')} {getString('googlecalendar')}
-                          </Menu.Item>
-                          <Menu.Item value="outlook" fontSize="md" p="0.75rem 1rem" onClick={() => handleAddToCalendar('outlook')}>
-                            {getIcon('outlook')} {getString('outlook')}
-                          </Menu.Item>
-                          <Menu.Item value="ics" fontSize="md" p="0.75rem 1rem" onClick={() => handleAddToCalendar('ics')}>
-                            {getIcon('apple')} {getString('saveics')}
-                          </Menu.Item>
-                        </Menu.Content>
-                      </Menu.Positioner>
-                    </Portal>
-                  </Menu.Root>
-                  {ticketUrl && (
-                    <Button color={colors.text} bg={colors.accentgreen} rounded="md" size="md" asChild _hover={{ transform: 'scale(1.05)', bg: colors.hover, transition: 'transform 0.2s' }}>
-                      <a href={ticketUrl} target="_blank" rel="noopener noreferrer">
-                        {getString('ticket')} {getIcon('ticket')}
-                      </a>
-                    </Button>
-                  )}
-                </Stack>
+
+                      <Menu.Root>
+                        <Menu.Trigger asChild>
+                          <Button size="sm" bg={colors.accentgreen} color={colors.text} _hover={{ bg: colors.hover }}>
+                            {getString("calendar")}{" "} {getIcon("calendarsave")}
+                          </Button>
+                        </Menu.Trigger>
+                        <Portal>
+                          <Menu.Positioner>
+                            <Menu.Content minW="13rem">
+                              <Menu.Item value="google" onClick={() => handleAddToCalendar("google")}>
+                                {getIcon("googlecalendar")}{" "} {getString("googlecalendar")}
+                              </Menu.Item>
+                              <Menu.Item value="outlook" onClick={() => handleAddToCalendar("outlook")}>
+                                {getIcon("outlook")} {getString("outlook")}
+                              </Menu.Item>
+                              <Menu.Item value="ics" onClick={() => handleAddToCalendar("ics")}>
+                                {getIcon("apple")} {getString("saveics")}
+                              </Menu.Item>
+                            </Menu.Content>
+                          </Menu.Positioner>
+                        </Portal>
+                      </Menu.Root>
+
+                      {gig.ticketUrl && (
+                          <Button size="sm" bg={colors.accentgreen} color={colors.text} _hover={{ bg: colors.hover }} asChild>
+                            <a href={gig.ticketUrl} target="_blank" rel="noopener noreferrer">
+                              {getString("ticket")} {getIcon("ticket")}
+                            </a>
+                          </Button>
+                      )}
+                    </Flex>
+
+                    <Text fontSize="sm" color={colors.gray}>
+                      {getString("hour", timeStr)} - {gig.adress} {gig.city}
+                    </Text>
+                  </Stack>
+                </Box>
               </Collapsible.Content>
-            </VStack>
-          </Flex>
-        </Stack>
-        <Flex w="100%" marginTop="auto" pb="0.3rem">
-          <Text fontWeight="bold">{getString('hour', timeStr)}, {adress} {city}</Text>
-        </Flex>
-      </Container>
-    </Collapsible.Root>
+            </Collapsible.Root>
+          </Table.Cell>
+        </Table.Row>
+      </>
   );
-}
+};
 
-const PastGigCard = ({id, name, time, city} : Gig) => {
-  const date = new Date(time * 1000);
-  const dateOpt: Intl.DateTimeFormatOptions = { timeZone: 'Europe/Berlin', year: '2-digit', month: '2-digit', day: '2-digit'};
-  const dateStr = date.toLocaleString('de-DE', dateOpt);
-
+const GigTable = ({ list, isPast }: { list: Gig[]; isPast: boolean }) => {
   return (
-     <Container key={id} minH="3rem" maxW="50rem" borderWidth="2px" borderColor={colors.text}  borderRadius="0.75rem" overflow="hidden" bg={colors.accentwhite}>
-      <Box h="100%" p="0.75rem" w={{base: "100%", md: "100%"}} display="flex" justifyContent="center">
-        <VStack align="start" gap="1rem" h="100%">
-          <Flex w="100%" gap="0.5rem" direction={{ base: "column", md: "row" }} justify="center">
-            <Text fontSize="xl" fontWeight="bold">{dateStr} - {name}</Text>
-            <Text fontSize="xl" fontWeight="bold">({city})</Text>
-          </Flex>
-        </VStack>
+      <Box borderRadius="0.75rem" borderWidth="2px" borderColor={colors.border} overflow="hidden" bg={colors.accentwhite}>
+        <Table.Root size="md" variant="line" interactive tableLayout="fixed">
+          <Table.Body>
+            {list.map((gig) => (
+                <GigRow key={gig.id} gig={gig} isPast={isPast} />
+            ))}
+          </Table.Body>
+        </Table.Root>
       </Box>
-    </Container>
   );
-}
+};
 
 export default function Live() {
   const { getString } = useTranslation();
   const now = Date.now() / 1000;
-  const upcomingGigs = gigs.filter(gig => gig.time >= now);
-  const pastGigs = gigs.filter(gig => gig.time < now);
+  const upcomingGigs = gigs.filter((g) => g.time >= now).sort((a, b) => a.time - b.time);
+  const pastGigs = gigs.filter((g) => g.time < now).sort((a, b) => b.time - a.time);
+
   return (
-    <Container>
-      <Stack>
-        <Box marginBottom="5rem">
-          <Flex align="left">
-            <Text fontSize="3xl" fontWeight="bold">{getString("upcoming_gigs")}</Text>
-          </Flex>
-          <Container w="100%" pt="1rem" maxW={{ base: "100%", md: "50rem", lg: "64rem", xl: "72rem" }}>
-            <Stack justify="center" align="stretch" gap="1rem">
-              {upcomingGigs.length > 0 ? (
-                upcomingGigs.toReversed().map((gig) => (
-                  <GigCard
-                    key={gig.id}
-                    id={gig.id}
-                    name={gig.name}
-                    time={gig.time}
-                    city={gig.city}
-                    adress={gig.adress}
-                    location={gig.location}
-                    description={gig.description}
-                    ticketUrl={gig.ticketUrl}/>
-                ))
-              ) : (
-                <Stack>
-                  <Text fontSize="xl" fontWeight="bold"> {getString("no_upcoming_gigs")}</Text>
-                  <iframe
-                     style={{
-                      width: '100%',
-                      height: '80vh',
-                      maxWidth: '50rem',
-                      maxHeight: '30rem',
-                      borderRadius: '0.75rem',
-                      border: 'none'
-                    }}
-                    src="https://open.spotify.com/embed/artist/4S3tOMrY2Xj9zhnmema3M3?utm_source=generator"
-                    allowFullScreen
-                    allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-                    loading="lazy"
-                  />
-                </Stack>
-              )
-              }
-            </Stack>
-          </Container>
-        </Box>
-        <Box>
-          <Flex align="left">
-            <Text fontSize="3xl" fontWeight="bold">{getString("past_gigs")}</Text>
-          </Flex>
-          <Container maxW="50rem" pl={{base: "0.1rem", md: "6.5rem"}} pr={{base: "0.1rem", md: "6.5rem"}}>
-            <Stack justify="center" align="stretch" gap="1rem">
-              {pastGigs.map((gig) => (
-                <PastGigCard key={gig.id} id={gig.id} name={gig.name} time={gig.time} city={gig.city} />
-              ))}
-            </Stack>
-          </Container>
-        </Box>
-      </Stack>
-    </Container>
-  )
+      <Container maxW={{ base: "100%", md: "60rem" }} py="2rem">
+        <Tabs.Root defaultValue="upcoming" variant="line" css={{"--tabs-indicator-bg": `${colors.beige}`}}>
+          <Tabs.List borderBottomWidth="2px" borderBottomColor={colors.border}>
+            <Tabs.Trigger value="upcoming" fontSize="lg" fontWeight="bold" color={colors.text} _selected={{ bg: colors.beige }}>
+              {getString("upcoming_gigs")}
+            </Tabs.Trigger>
+            <Tabs.Trigger value="past" fontSize="lg" fontWeight="bold" color={colors.text} _selected={{ bg: colors.beige }}>
+              {getString("past_gigs")}
+            </Tabs.Trigger>
+            <Tabs.Indicator/>
+          </Tabs.List>
+
+          <Tabs.Content value="upcoming">
+            <GigTable list={upcomingGigs} isPast={false} />
+          </Tabs.Content>
+          <Tabs.Content value="past">
+            <GigTable list={pastGigs} isPast={true} />
+          </Tabs.Content>
+        </Tabs.Root>
+      </Container>
+  );
 }

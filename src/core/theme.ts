@@ -28,7 +28,10 @@ export const colors = {
   bg_dark_lighter: "#3d5650cc",
   accentgreen: "#a1aaaa",
   accentwhite: "#f4f4f5",
+  accentwhite_selected: "#eaeaea",
   hover: "#ca6164",
+  beige: "#cbb39a",
   text: "#1C1C1E",
   border: "#1C1C1E",
+  gray: "#a1a1aa",
 } as const;
