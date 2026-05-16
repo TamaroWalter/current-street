@@ -55,8 +55,9 @@ const Hero = () => {
 
 const NextGig = () => {
   const { getString, getTimeFormat } = useTranslation();
-  const nextGig = gigs.filter(gig => gig.time > (Date.now() / 1000)).sort((a,b) => a.time - b.time)[0];
+  const nextGig = gigs.sort((a,b) => b.time - a.time)[0];
   const time = new Date(nextGig.time * 1000);
+  const inFuture = nextGig.time >= Date.now() / 1000;
   const timeStr = time.toLocaleString(getTimeFormat(), { timeZone: 'Europe/Berlin', hour: '2-digit', minute: '2-digit' });
   const day = time.toLocaleString(getTimeFormat(), { timeZone: 'Europe/Berlin', day: '2-digit'});
   const month = time.toLocaleString(getTimeFormat(), { timeZone: 'Europe/Berlin', month: 'short'});
@@ -66,7 +67,7 @@ const NextGig = () => {
     <Card.Root borderRadius="xl" w={{base: "100%", md:"50%"}}>
       <Card.Body>
         <Text fontSize="xs" textTransform="uppercase" letterSpacing="wider" color={colors.gray} mb="3">
-          {getString('upcoming_gig')}
+          {inFuture ? getString('upcoming_gig') : getString('last_gig')}
         </Text>
         <HStack align="flex-start" gap="3">
           <Box textAlign="center" bg={colors.hover} color={colors.accentwhite} borderRadius="lg" px="3" py="2" minW="5rem">
@@ -76,10 +77,10 @@ const NextGig = () => {
           </Box>
           <Box>
             <Text fontWeight="medium">{nextGig.name}</Text>
-            <Text fontSize="sm" color={colors.gray}>{nextGig.city} - {getString('hour', timeStr)}</Text>
+            <Text fontSize="sm" color={colors.gray}>{nextGig.city} {inFuture ? '- ' + getString('hour', timeStr) : ''}</Text>
             <HStack mt="3" gap="2">
               <Button size="xs" bg={colors.bg} color={colors.accentwhite} asChild>
-                {nextGig.ticketUrl && nextGig.ticketUrl.trim() ? (
+                {nextGig.ticketUrl && nextGig.ticketUrl.trim() && inFuture ? (
                   <a href={nextGig.ticketUrl} target="_blank" rel="noopener noreferrer">
                     {getString('ticket')} {getIcon('ticket')}
                   </a>
