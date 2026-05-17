@@ -1,26 +1,18 @@
-// Imports from react and UI library.
 import { BrowserRouter, Routes, Route, Link, useLocation, useNavigate} from 'react-router-dom';
 import { Button, Flex, Box, Text,  Container, HStack, Link as ChakraLink, Icon, Stack, Drawer, IconButton, Portal, Spacer, VStack} from '@chakra-ui/react';
 import { useState } from 'react';
-// Import core.
 import { getIcon } from './core/lib';
 import { iconMap, colors } from './core/theme';
 import { useLanguage, useTranslation } from './core/LanguageContext';
-// Import components styling.
 import './App.css';
-
-// Import other components.
 import Home from './components/Home';
 import About from './components/About';
 import Live from './components/Live';
-
-// Import data.
 import navigation from './data/navigation.json';
 import social from './data/social.json';
 
 /**
  * Builds the content of the website.
- * @returns 
  */
 export default function App() {
   return (
@@ -69,7 +61,7 @@ const MobileNav = () => {
       <Drawer.Root open={open} onOpenChange={(e) => setOpen(e.open)} placement="top" size="full">
         <Drawer.Trigger asChild>
           <IconButton> {getIcon('menu')} </IconButton>
-        </Drawer.Trigger>  
+        </Drawer.Trigger>
         <Portal>
           <Drawer.Backdrop/>
           <Drawer.Positioner>
@@ -121,7 +113,7 @@ const MobileNav = () => {
                 <Icon size="2xl" me="1rem" pe="auto" cursor="pointer" mt="1rem" color={colors.text}>
                   {getIcon('close')}
                 </Icon>
-              </Drawer.CloseTrigger>  
+              </Drawer.CloseTrigger>
             </Drawer.Content>
           </Drawer.Positioner>
         </Portal>
@@ -160,32 +152,28 @@ const DesktopNav = () => {
 }
 
 const AppFooter = () => {
-  const { getString } = useTranslation(); 
+  const { getString } = useTranslation();
   const { language, setLanguage } = useLanguage();
   return (
-    <Container as="footer" className="footer" display={{base: "none", md: "block"}}>
-      <Stack direction="row" justify="space-between" align="center">
-        <HStack gap="4">
-          {social.map(({ i, href, icon }) => (
-            <ChakraLink className="footer-social" key={i} href={href} colorPalette="gray" target="_blank" rel="noopener noreferrer">
-              <Icon size="lg">{getIcon(icon as keyof typeof iconMap)}</Icon>
-            </ChakraLink>
-          ))}
-        </HStack>
-        <Flex align="center" justify="center" width="100%">
+      <Container as="footer" py={{ base: '2', md: '3' }}>
+        <Stack gap="1">
+          <Stack display={{ base: "none", md: "flex" }} direction="row" justify="space-between" align="center">
+            <HStack gap="4">
+              {social.map(({ i, href, icon }) => (
+                  <ChakraLink className="footer-social" key={i} href={href} colorPalette="gray" target="_blank" rel="noopener noreferrer">
+                    <Icon size="lg">{getIcon(icon as keyof typeof iconMap)}</Icon>
+                  </ChakraLink>
+              ))}
+            </HStack>
+            <Button variant="plain" className="footer-togglelang"
+                onClick={() => setLanguage(language === 'en' ? 'de' : 'en')}>
+              {getString("lang_toggle")}
+            </Button>
+          </Stack>
           <Text className="footer_copyright">
             © {new Date().getFullYear()} {getString("copyright")}
           </Text>
-        </Flex>
-        <Button
-          display={{ base: "none", md: "block" }}
-          variant="plain"
-          className="footer-togglelang"
-          onClick={() => setLanguage(language === 'en' ? 'de' : 'en')}
-        >
-          {getString("lang_toggle")}
-        </Button>
-      </Stack>
-    </Container>
+        </Stack>
+      </Container>
   );
 }

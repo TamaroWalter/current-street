@@ -31,17 +31,13 @@ const Hero = () => {
   const { getString } = useTranslation();
   const spotify = socials.find(social => social.icon == "spotify")!;
   return (
-    <Card.Root w="100%" borderRadius="2xl" borderColor={colors.bg_dark} bg={colors.bg_dark_lighter} pt={{ base: "1rem", md: "3rem" }} pb="1rem">
+    <Card.Root w="100%" borderRadius="2xl" borderColor={colors.bg_dark} bg={colors.bg_dark_lighter}>
       <Card.Body gap="2">
         <Card.Description display="flex" justifyContent="center" alignContent="center">
-          <VStack align="center">
-            <Text fontSize="6xl" fontWeight="medium" color={colors.accentwhite} textAlign="center">
-              {getString("band_name")}
-            </Text>
-            <Text fontSize="md" color={colors.accentwhite} textAlign="center">
-              {getString("hero_desc")}
-            </Text>
-            <Button mt="2rem" bg={colors.hover} variant="solid" asChild>
+          <VStack align="center" gap="6">
+            <Image src="/favicon.png" alt="Current Street" my="3" style={{ height: '200px', width: 'auto', filter: 'none' }} />
+            <Text fontSize="md" color={colors.accentwhite} textAlign="center">{getString("hero_desc")}</Text>
+            <Button bg={colors.hover} variant="solid" asChild>
               <ChakraLink href={spotify.href}>
                 {getIcon('spotify')} <Text>{getString("hero_music")}</Text>
               </ChakraLink>
